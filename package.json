@@ -1,0 +1,23 @@
+{
+  "name": "rxjs-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "nodemon --watch . server.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "blue-tape": "^0.2.0",
+    "bluebird": "^3.3.1",
+    "dotenv": "^2.0.0",
+    "eslint": "^2.0.0",
+    "nodemon": "^1.8.1",
+    "request": "^2.69.0",
+    "rx": "^4.0.7",
+    "tap": "^5.4.4",
+    "tape": "^4.4.0"
+  }
+}
