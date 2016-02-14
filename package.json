@@ -1,23 +1,20 @@
 {
   "name": "rxjs-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "An node http server wrapped with RxJS.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "nodemon --watch . server.test.js"
+    "test": "nodemon --watch . server.test.js | faucet"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Marcus Nielsen",
+  "license": "MIT",
   "dependencies": {
-    "blue-tape": "^0.2.0",
-    "bluebird": "^3.3.1",
     "dotenv": "^2.0.0",
     "eslint": "^2.0.0",
+    "faucet": "0.0.1",
     "nodemon": "^1.8.1",
-    "request": "^2.69.0",
     "rx": "^4.0.7",
-    "tap": "^5.4.4",
-    "tape": "^4.4.0"
+    "tap": "^5.4.4"
   }
 }

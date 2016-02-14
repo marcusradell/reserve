@@ -1,4 +1,5 @@
-require('dotenv').config();
+// require('dotenv').config();
+require('./config')
 const tap = require('tap')
 const http = require('http')
 const serverCreate = require('./server')
@@ -26,7 +27,7 @@ tap.test('server', function handleTape(test) {
     return new Promise(function handleResponsePromise(resolve) {
       req.on('response', function handleOnResponse(response) {
         response.on('data', function handleOnData(data) {
-          test.strictEqual(data.toString(), expected)
+          test.strictEqual(data.toString(), expected, 'response should return correct text')
           resolve()
         })
       })
