@@ -4,8 +4,9 @@
   "description": "An node http server wrapped with RxJS.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "node server.test.js",
+    "start": "node app/index.js",
+    "watch:start": "nodemon -q -x 'npm start'",
+    "test": "node app/server/index.test.js",
     "watch:test": "nodemon -q -x 'npm test'",
     "lint": "eslint -c .eslintrc.js ."
   },
