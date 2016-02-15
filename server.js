@@ -1,6 +1,5 @@
 const http = require('http')
 const Rx = require('rx')
-const Promise = require('bluebird')
 const request$ = new Rx.Subject()
 const responseCodes = {
   'success': 200
@@ -32,6 +31,11 @@ function create() {
         function close() {
           return new Promise(function handleDestroyPromise(resolveClose) {
             server.close(function handleClose() {
+              /* eslint-disable no-console */
+              console.log(
+                `Server closed on [${process.env.HOST}:${process.env.PORT}]`
+              )
+              /* eslint-enable no-console */
               resolveClose()
             })
           })

@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "nodemon --watch . server.test.js | faucet"
+    "test": "node server.test.js",
+    "watch:test": "nodemon -q -x 'npm test'",
+    "lint": "eslint -c .eslintrc.js ."
   },
   "author": "Marcus Nielsen",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^2.0.0",
     "eslint": "^2.0.0",
-    "faucet": "0.0.1",
     "nodemon": "^1.8.1",
     "rx": "^4.0.7",
     "tap": "^5.4.4"
