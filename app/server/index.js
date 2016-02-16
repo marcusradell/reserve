@@ -1,23 +1,6 @@
 const http = require('http')
 const Rx = require('rx')
-const request$ = new Rx.Subject()
-const responseCodes = require('../constants/response-codes')
-const responseHeaders = require('../constants/response-headers')
-
-function sendHello(data) {
-  const headers = {}
-  headers[responseHeaders.contentType] = responseHeaders.applicationJson
-  data.res.writeHead(responseCodes.success, headers)
-  data.res.end(JSON.stringify({'text': 'Hello World!'}))
-}
-
-request$.filter(function rootPathFilter(requestData) {
-  return requestData.req.url === '/'
-}).subscribe(sendHello)
-
-request$.filter(function rootPathFilter(requestData) {
-  return requestData.req.url === '/'
-}).subscribe(sendHello)
+const router = require('./router')
 
 function getCloseFn(server) {
   return function close () {
@@ -35,6 +18,9 @@ function getCloseFn(server) {
 }
 
 function create() {
+  const request$ = new Rx.Subject()
+  router.init('/v1', request$)
+
   return new Promise(function handleCreatePromise(resolveCreate) {
     const server = http.createServer()
 

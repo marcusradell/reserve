@@ -11,7 +11,7 @@ rootTest('server', function handleTape(test) {
       port: process.env.PORT,
       hostname: process.env.HOST,
       method: 'GET',
-      path: '/'
+      path: '/v1/hello'
     };
 
     const req = http.request(options)
