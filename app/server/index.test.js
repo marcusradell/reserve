@@ -1,37 +1,35 @@
 require('../config')
 const rootTest = require('tap').test
-const http = require('http')
 const serverCreate = require('../server')
-const Rx = require('rx')
+const ioClient = require('socket.io-client')
+const socketURL = `http://${process.env.HOST}:${process.env.PORT}`
+const options = {
+  transports: ['websocket'],
+  'force new connection': true
+}
 
 rootTest('server', function handleTape(test) {
-  return serverCreate.create()
-  .then(function handleCreateThen(serverData) {
-    const options = {
-      port: process.env.PORT,
-      hostname: process.env.HOST,
-      method: 'GET',
-      path: '/v1/hello'
-    };
+  return new Promise(function handlePromise(resolve, reject) {
+    serverCreate.create()
+    .then(function handleCreateThen(serverData) {
+      const socket = ioClient(socketURL, options)
 
-    const req = http.request(options)
-    req.end(function handleRequestEnd() {
-      serverData.close()
-    })
+      socket.on('connect', function handleConnect() {
+        test.pass('Client connected.')
+      })
 
-    return new Promise(function handleResponsePromise(resolve) {
-      Rx.Observable.fromEvent(req, 'response')
-      .flatMap(function handleFlatMap(response) {
-        return Rx.Observable.fromEvent(response, 'data')
-      }).subscribe(function handleResponseData(data) {
-        const expected = {text: 'Hello World!'}
-        const actual = JSON.parse(data.toString())
+      socket.on('message', function handleData() {
+        socket.disconnect()
+      })
 
-        test.strictDeepEqual(
-          actual, expected,
-          'response should return correct text'
-        )
+      socket.on('error', function handleData(err) {
+        reject(err)
+        serverData.close()
+      })
 
+      socket.on('disconnect', function handleClose() {
+        test.pass('data recieved and client disconnected.')
+        serverData.close()
         resolve()
       })
     })

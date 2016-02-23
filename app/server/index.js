@@ -1,6 +1,6 @@
 const http = require('http')
 const Rx = require('rx')
-const router = require('./router')
+const SocketIo = require('socket.io')
 
 function getCloseFn(server) {
   return function close () {
@@ -18,17 +18,42 @@ function getCloseFn(server) {
 }
 
 function create() {
-  const request$ = new Rx.Subject()
-  router.init('/v1', request$)
+  // const request$ = new Rx.Subject()
+  // router.init('/v1', request$)
 
   return new Promise(function handleCreatePromise(resolveCreate) {
-    const server = http.createServer()
+    const httpServer = http.createServer()
+    const ioServer = SocketIo.listen(httpServer)
+    const second = 1000
 
-    server.on('request', function handleConnect(req, res) {
-      request$.onNext({req, res})
+    const event$ = Rx.Observable
+    .interval(second)
+    .timeInterval()
+    .map(function handleMap(value) {
+      return JSON.stringify(value)
     })
 
-    server.listen(
+    ioServer.on('connection', function handleConnect(socket) {
+      /* eslint-disable no-console */
+      console.log(
+        'Server recieved a connect.'
+      )
+      /* eslint-enable no-console */
+
+      event$.subscribe(function handleSubscribe(val) {
+        socket.emit('message', val)
+      })
+
+      socket.on('disconnect', function handleDisconnect() {
+        /* eslint-disable no-console */
+        console.log(
+          'Server recieved a disconnect.'
+        )
+        /* eslint-enable no-console */
+      })
+    })
+
+    httpServer.listen(
       process.env.PORT,
       process.env.HOST,
       function handleServerListen() {
@@ -39,8 +64,8 @@ function create() {
         /* eslint-enable no-console */
 
         resolveCreate({
-          server,
-          close: getCloseFn(server)
+          httpServer,
+          close: getCloseFn(httpServer)
         })
       })
   })
