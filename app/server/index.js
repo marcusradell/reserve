@@ -18,9 +18,6 @@ function getCloseFn(server) {
 }
 
 function create() {
-  // const request$ = new Rx.Subject()
-  // router.init('/v1', request$)
-
   return new Promise(function handleCreatePromise(resolveCreate) {
     const httpServer = http.createServer()
     const ioServer = SocketIo.listen(httpServer)
