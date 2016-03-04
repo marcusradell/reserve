@@ -135,7 +135,7 @@ module.exports = {
         "no-useless-constructor": 2,
         "no-var": 2,
         "no-void": 2,
-        "no-warning-comments": 2,
+        "no-warning-comments": 0,
         "no-whitespace-before-property": 2,
         "no-with": 2,
         "object-curly-spacing": 2,

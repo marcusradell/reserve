@@ -1,19 +1,11 @@
 const groups = require('./groups')
 const levels = require('./levels')
-const Rx = require('rx')
-const log$ = new Rx.Subject()
-
-function add(level, group, message) {
-  log$.onNext({
-    level,
-    group,
-    message
-  })
-}
+const events = require('./events')
+const repository = require('./repository')
 
 module.exports = {
-  add,
-  log$,
+  events,
   groups,
-  levels
+  levels,
+  repository
 }

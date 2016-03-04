@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node app/index.js",
-    "watch:start": "nodemon -q -x 'npm start'",
+    "watch:start": "nodemon -x 'npm start'",
     "test": "node app/server/index.test.js",
-    "watch:test": "nodemon -q -x 'npm test'",
+    "watch:test": "nodemon -x 'npm test'",
     "lint": "eslint -c .eslintrc.js ."
   },
   "author": "Marcus Nielsen",
