@@ -3,16 +3,38 @@ const user = require('../user')
 
 rootTest('user', function handleTape(test) {
   return new Promise(function handlePromise(resolve) {
-    const SKIP_INITIAL_VALUE = 1
-    // TODO: Get last item directly instead of skipping to second item. -MANI
-    const lastItem$ = user.repository.state$.skip(SKIP_INITIAL_VALUE)
-    lastItem$.subscribe(
+    // TODO: Learn about publish and connect and refactor accordingly. -MANI
+    const lastItem$ = user.repository.state$.publish()
+    lastItem$.connect()
+    const disposer = lastItem$.subscribe(
       function handleStateSubscribe(userDataCollection) {
+        disposer.dispose()
         const FIRST_USER = 0
-        test.strictEquals(userDataCollection[FIRST_USER].name, 'Marcus Nielsen')
+        test.strictEquals(
+          userDataCollection[FIRST_USER].name,
+          'Marcus Nielsen',
+          'should login user with name Marcus Nielsen'
+        )
         resolve()
       }
     )
     user.events.login('Marcus Nielsen')
+  })
+  .then(function handleThen() {
+    // TODO: Learn about publish and connect and refactor accordingly. -MANI
+    const lastItem$ = user.repository.state$.publish()
+    lastItem$.connect()
+    const disposer = lastItem$.subscribe(
+      function handleSubscribe(userDataCollection) {
+        disposer.dispose()
+        const EMPTY_LENGTH = 0
+        test.strictEquals(
+          userDataCollection.length,
+          EMPTY_LENGTH,
+          'should logout user with name Marcus Nielsen'
+        )
+      }
+    )
+    user.events.logout('Marcus Nielsen')
   })
 })

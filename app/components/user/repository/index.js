@@ -22,9 +22,9 @@ events.rename$.subscribe(function handleLoginSubscribe(renameData) {
 events.logout$.subscribe(function handleLoginSubscribe(logoutData) {
   stateSubject.onNext(function logoutEventHandler(currentState) {
     // TODO: Make pure. -MANI
-    const nameIndex = currentState.indexOf(logoutData.name)
-    currentState.splice(nameIndex, SPLICE_SELF)
-    return currentState
+    return currentState.filter(function filterCurrentState(userData) {
+      return userData.name !== logoutData.name
+    })
   })
 })
 
