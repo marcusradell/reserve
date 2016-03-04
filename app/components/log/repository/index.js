@@ -13,7 +13,7 @@ function loadDatabaseState() {
 events.add$
 .timestamp()
 .subscribe(function handleAddSubscribe(timeStampedLogData) {
-  stateSubject.onNext(function handleOnNext(currentDatabaseState) {
+  stateSubject.onNext(function addEventHandler(currentDatabaseState) {
     // TODO: Make pure functional. -MANI
     currentDatabaseState.push(timeStampedLogData)
     return currentDatabaseState
@@ -22,8 +22,8 @@ events.add$
 
 const state$ = stateSubject
 .startWith(loadDatabaseState())
-.scan(function handleStateScan(currentDatabaseState, eventHandler) {
-  return eventHandler(currentDatabaseState)
+.scan(function handleStateScan(currentDatabaseState, handleEvent) {
+  return handleEvent(currentDatabaseState)
 })
 
 state$

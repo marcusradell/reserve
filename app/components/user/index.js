@@ -1,13 +1,7 @@
-const Rx = require('rx')
-const user$ = new Rx.Subject()
-
-function create(name) {
-
-}
-
-
+const events = require('./events')
+const repository = require('./repository')
 
 module.exports = {
-  user$,
-  create
+  events,
+  repository
 }
