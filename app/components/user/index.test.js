@@ -3,13 +3,13 @@ const user = require('../user')
 
 rootTest('user', function handleTape(test) {
   return new Promise(function handlePromise(resolve) {
-    const lastItem$ = user.repository.state$
+    const SKIP_INITIAL_VALUE = 1
+    // TODO: Get last item directly instead of skipping to second item. -MANI
+    const lastItem$ = user.repository.state$.skip(SKIP_INITIAL_VALUE)
     lastItem$.subscribe(
       function handleStateSubscribe(userDataCollection) {
-        // TODO: Make this work. -MANI
-        // const FIRST_USER = 0
-        // test.strictEquals(userDataCollection[FIRST_USER].name, 'Marcus Nielsen')
-        test.pass('temp')
+        const FIRST_USER = 0
+        test.strictEquals(userDataCollection[FIRST_USER].name, 'Marcus Nielsen')
         resolve()
       }
     )
