@@ -1,70 +1,50 @@
 const http = require('http')
-const Rx = require('rx')
 const SocketIo = require('socket.io')
+const log = require('../components/log')
+const consoleLogger = require('../components/log/console-logger')
+const events = require('./create-event$')
+const handleConnectFactory = require('./handle-connect-factory')
 
-function getCloseFn(server) {
+function CloseFactory(server) {
   return function close () {
     return new Promise(function handleDestroyPromise(resolveClose) {
       server.close(function handleClose() {
-        /* eslint-disable no-console */
-        console.log(
+        log.add(
+          log.levels.info,
+          log.groups.httpServer,
           `Server closed on [${process.env.HOST}:${process.env.PORT}]`
         )
-        /* eslint-enable no-console */
         resolveClose()
       })
     })
   }
 }
 
+function listen(httpServer, resolveCreate) {
+  httpServer.listen(
+    process.env.PORT,
+    process.env.HOST,
+    function handleServerListen() {
+      log.add(
+        log.levels.info,
+        log.groups.httpServer,
+        `Listening on [${process.env.HOST}:${process.env.PORT}]`
+      )
+      resolveCreate({
+        httpServer,
+        close: CloseFactory(httpServer)
+      })
+    })
+}
+
 function create() {
   return new Promise(function handleCreatePromise(resolveCreate) {
+    consoleLogger.create(log)
     const httpServer = http.createServer()
     const ioServer = SocketIo.listen(httpServer)
-    const second = 1000
-
-    const event$ = Rx.Observable
-    .interval(second)
-    .timeInterval()
-    .map(function handleMap(value) {
-      return JSON.stringify(value)
-    })
-
-    ioServer.on('connection', function handleConnect(socket) {
-      /* eslint-disable no-console */
-      console.log(
-        'Server recieved a connect.'
-      )
-      /* eslint-enable no-console */
-
-      event$.subscribe(function handleSubscribe(val) {
-        socket.emit('message', val)
-      })
-
-      socket.on('disconnect', function handleDisconnect() {
-        /* eslint-disable no-console */
-        console.log(
-          'Server recieved a disconnect.'
-        )
-        /* eslint-enable no-console */
-      })
-    })
-
-    httpServer.listen(
-      process.env.PORT,
-      process.env.HOST,
-      function handleServerListen() {
-        /* eslint-disable no-console */
-        console.log(
-          `Server started on [${process.env.HOST}:${process.env.PORT}]`
-        )
-        /* eslint-enable no-console */
-
-        resolveCreate({
-          httpServer,
-          close: getCloseFn(httpServer)
-        })
-      })
+    const event$ = events.createEvent$()
+    ioServer.on('connection', handleConnectFactory.create(event$, log))
+    listen(httpServer, resolveCreate)
   })
 }
 
