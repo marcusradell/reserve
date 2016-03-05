@@ -1,0 +1,7 @@
+PROTOCOL=http
+PORT=8080
+HOST=0.0.0.0
+LOG_MOCKED_DB=true
+LOG_LEVELS="info, warning, error"
+LOG_GROUPS=""
+NODE_ENV=production

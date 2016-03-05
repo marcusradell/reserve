@@ -8,9 +8,11 @@
     "watch:start": "nodemon -x 'npm start'",
     "test": "node app/server/index.test.js",
     "watch:test": "nodemon -x 'npm test'",
-    "lint": "eslint -c .eslintrc.js ."
+    "lint": "eslint -c .eslintrc.js .",
+    "docker:build": "docker build -t marcusnielsen/rxjs-server .",
+    "docker:run": "docker run -p 3000:8080 -d --env-file .docker-env marcusnielsen/rxjs-server"
   },
-  "author": "Marcus Nielsen",
+  "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "eslint": "^2.0.0",
