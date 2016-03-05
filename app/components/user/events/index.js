@@ -1,4 +1,5 @@
 const Rx = require('rx')
+const createEvent$ = require('./create-event$')
 
 const login$ = new Rx.Subject()
 
@@ -18,7 +19,7 @@ function logout(name) {
   logout$.onNext({name})
 }
 
-module.exports = {
+const events = {
   login,
   login$,
   rename,
@@ -26,3 +27,8 @@ module.exports = {
   logout,
   logout$
 }
+
+const event$ = createEvent$.create(events)
+events.event$ = event$
+
+module.exports = events

@@ -2,9 +2,8 @@ const http = require('http')
 const SocketIo = require('socket.io')
 const log = require('../components/log')
 const consoleLogger = require('../components/console-logger')
-
-const events = require('./create-event$')
 const handleConnectFactory = require('./handle-connect-factory')
+const events = require('./create-event$')
 
 function closeFactory(server) {
   return function close () {

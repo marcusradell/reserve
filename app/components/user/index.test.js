@@ -2,7 +2,7 @@ const rootTest = require('tap').test
 const user = require('../user')
 
 rootTest('user', function handleTape(test) {
-  return new Promise(function handlePromise(resolve) {
+  return new Promise(function handlePromiseLogin(resolve) {
     // TODO: Learn about publish and connect and refactor accordingly. -MANI
     const lastItem$ = user.repository.state$.publish()
     lastItem$.connect()
@@ -20,7 +20,10 @@ rootTest('user', function handleTape(test) {
     )
     user.events.login('Marcus Nielsen')
   })
-  .then(function handleThen() {
+  .then(function handleThenRename() {
+
+  })
+  .then(function handleThenLogout() {
     // TODO: Learn about publish and connect and refactor accordingly. -MANI
     const lastItem$ = user.repository.state$.publish()
     lastItem$.connect()

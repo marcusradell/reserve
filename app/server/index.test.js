@@ -15,11 +15,8 @@ rootTest('server', function handleTape(test) {
       const socket = ioClient(socketURL, options)
 
       socket.on('connect', function handleConnect() {
-        test.pass('Client connected.')
-      })
-
-      socket.on('message', function handleData() {
         socket.disconnect()
+        test.pass('Client connected.')
       })
 
       socket.on('error', function handleData(err) {
@@ -28,7 +25,7 @@ rootTest('server', function handleTape(test) {
       })
 
       socket.on('disconnect', function handleClose() {
-        test.pass('data recieved and client disconnected.')
+        test.pass('Client disconnected.')
         serverData.close()
         resolve()
       })

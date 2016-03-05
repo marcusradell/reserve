@@ -1,15 +1,7 @@
-const Rx = require('rx')
+const user = require('../components/user')
 
 function createEvent$() {
-  const second = 1000
-  return (
-    Rx.Observable
-    .interval(second)
-    .timeInterval()
-    .map(function handleMap(value) {
-      return JSON.stringify(value)
-    })
-  )
+  return user.events.event$
 }
 
 module.exports = {

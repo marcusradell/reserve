@@ -6,7 +6,7 @@ function create(event$, log) {
       'A client connected.'
     )
     const event$Unsubscribe = event$.subscribe(function handleSubscribe(val) {
-      socket.emit('message', val)
+      socket.emit('event$', val)
     })
     socket.on('disconnect', function handleDisconnect() {
       log.events.add(
@@ -16,6 +16,9 @@ function create(event$, log) {
       )
       event$Unsubscribe.dispose()
     })
+    require('../components/user').events.login('userme')
+    require('../components/user').events.rename('userme', 'useru')
+    require('../components/user').events.logout('useru')
   }
 }
 
