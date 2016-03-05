@@ -1,7 +1,7 @@
 const http = require('http')
 const SocketIo = require('socket.io')
 const log = require('../components/log')
-const consoleLogger = require('../components/console-logger')
+const logProducerConsole = require('../components/log-producer-console')
 const handleConnectFactory = require('./handle-connect-factory')
 const events = require('./create-event$')
 
@@ -20,35 +20,40 @@ function closeFactory(server) {
   }
 }
 
-function httpServerListen(httpServer, resolveCreate) {
-  httpServer.listen(
-    process.env.PORT,
-    process.env.HOST,
-    function handleServerListen() {
-      log.events.add(
-        log.levels.info,
-        log.groups.httpServer,
-        `Listening on [${process.env.HOST}:${process.env.PORT}]`
-      )
-      resolveCreate({
-        httpServer,
-        close: closeFactory(httpServer)
-      })
-    })
+function httpServerListen(httpServer, port, host) {
+  return new Promise(function handleCreatePromise(resolve) {
+    httpServer.listen(
+      port,
+      host,
+      function handleServerListen() {
+        log.events.add(
+          log.levels.info,
+          log.groups.httpServer,
+          `Listening on [${process.env.HOST}:${process.env.PORT}]`
+        )
+        resolve()
+      }
+    )
+  })
 }
 
-function create() {
-  return new Promise(function handleCreatePromise(resolveCreate) {
-    consoleLogger.create(
-      log,
-      process.env.LOG_LEVELS,
-      process.env.LOG_GROUPS
-    )
-    const httpServer = http.createServer()
+function handleThenSetupIoServerFactory(httpServer, event$, logModule) {
+  return function handleThenSetupIoServer() {
     const ioServer = SocketIo.listen(httpServer)
-    const event$ = events.createEvent$()
-    ioServer.on('connection', handleConnectFactory.create(event$, log))
-    httpServerListen(httpServer, resolveCreate)
+    ioServer.on('connection', handleConnectFactory.create(event$, logModule))
+  }
+}
+
+function create(options) {
+  logProducerConsole.create(log, options.logLevels, options.logGroups)
+  const httpServer = http.createServer()
+  return httpServerListen(httpServer, options.port, options.host)
+  .then(handleThenSetupIoServerFactory(httpServer, events.createEvent$(), log))
+  .then(function handleThenReturnServerData() {
+    return {
+      httpServer,
+      close: closeFactory(httpServer)
+    }
   })
 }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app/index.js",
     "watch:start": "nodemon -x 'npm start'",
-    "test": "node app/server/index.test.js",
+    "test": "tap app/*/*.test.js",
     "watch:test": "nodemon -x 'npm test'",
     "lint": "eslint -c .eslintrc.js .",
     "docker:build": "docker build -t marcusnielsen/rxjs-server .",
