@@ -1,9 +1,9 @@
 const rootTest = require('tap').test
-const user = require('../../user')
+const behaviors = require('../behaviors')
 
-rootTest('user', function handleTape(test) {
+rootTest('user behaviors', function handleTape(test) {
   return new Promise(function handlePromiseLogin(resolve) {
-    const disposer = user.events.login$.subscribe(
+    const disposer = behaviors.events.login$.subscribe(
       function handleStateSubscribe(loginData) {
         disposer.dispose()
         test.strictEquals(
@@ -14,11 +14,11 @@ rootTest('user', function handleTape(test) {
         resolve()
       }
     )
-    user.events.login('Marcus Nielsen')
+    behaviors.actions.login('Marcus Nielsen')
   })
   .then(function handleThenRename() {
     return new Promise(function handlePromiseLogin(resolve) {
-      const disposer = user.events.rename$.subscribe(
+      const disposer = behaviors.events.rename$.subscribe(
         function handleSubscribe(renameData) {
           disposer.dispose()
           test.deepEquals(
@@ -32,12 +32,12 @@ rootTest('user', function handleTape(test) {
           resolve()
         }
       )
-      user.events.rename('Marcus Nielsen', 'Marcus Rådell')
+      behaviors.actions.rename('Marcus Nielsen', 'Marcus Rådell')
     })
   })
   .then(function handleThenLogout() {
     return new Promise(function handlePromiseLogout(resolve) {
-      const disposer = user.events.logout$.subscribe(
+      const disposer = behaviors.events.logout$.subscribe(
         function handleSubscribe(logoutData) {
           disposer.dispose()
           test.strictEquals(
@@ -48,7 +48,7 @@ rootTest('user', function handleTape(test) {
           resolve()
         }
       )
-      user.events.logout('Marcus Rådell')
+      behaviors.actions.logout('Marcus Rådell')
     })
   })
 })

@@ -1,3 +1,6 @@
+// TODO: Make into a helper. Split events object into actions and events.
+// Read keys of the events object and build the event$ from that. -MANI
+
 const Rx = require('rx')
 const COMPONENT_NAME = 'user'
 function create(events) {

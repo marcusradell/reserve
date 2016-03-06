@@ -1,7 +1,8 @@
-const events = require('./events')
 const repository = require('./repository')
+const behaviors = require('./behaviors')
 
 module.exports = {
-  events,
-  repository
+  repository,
+  actions: behaviors.actions,
+  events: behaviors.events
 }

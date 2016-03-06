@@ -1,8 +1,8 @@
 const Rx = require('rx')
-const events = require('../events')
+const behaviors = require('../behaviors')
 const stateSubject = new Rx.Subject()
 
-events.login$.subscribe(function handleLoginSubscribe(loginData) {
+behaviors.events.login$.subscribe(function handleLoginSubscribe(loginData) {
   stateSubject.onNext(function handleOnNext(currentState) {
     // TODO: Pure array push. -MANI
     currentState.push(loginData)
@@ -10,7 +10,7 @@ events.login$.subscribe(function handleLoginSubscribe(loginData) {
   })
 })
 
-events.rename$.subscribe(function handleRenameSubscribe(renameData) {
+behaviors.events.rename$.subscribe(function handleRenameSubscribe(renameData) {
   stateSubject.onNext(function handleOnNext(currentState) {
     const withoutOldNameState = currentState.filter(
       function handleFilter(userData) {
@@ -22,7 +22,7 @@ events.rename$.subscribe(function handleRenameSubscribe(renameData) {
   })
 })
 
-events.logout$.subscribe(function handleLoginSubscribe(logoutData) {
+behaviors.events.logout$.subscribe(function handleLoginSubscribe(logoutData) {
   stateSubject.onNext(function logoutEventHandler(currentState) {
     // TODO: Make pure. -MANI
     return currentState.filter(function handleFilter(userData) {

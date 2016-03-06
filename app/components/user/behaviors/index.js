@@ -19,16 +19,22 @@ function logout(name) {
   logout$.onNext({name})
 }
 
-const events = {
+const actions = {
   login,
-  login$,
   rename,
+  logout
+}
+
+const events = {
+  login$,
   rename$,
-  logout,
   logout$
 }
 
 const event$ = createEvent$.create(events)
 events.event$ = event$
 
-module.exports = events
+module.exports = {
+  events,
+  actions
+}
