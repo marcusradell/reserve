@@ -1,7 +1,6 @@
 const Rx = require('rx')
 const events = require('../events')
 const stateSubject = new Rx.Subject()
-const SPLICE_SELF = 1
 
 events.login$.subscribe(function handleLoginSubscribe(loginData) {
   stateSubject.onNext(function handleOnNext(currentState) {
@@ -11,18 +10,22 @@ events.login$.subscribe(function handleLoginSubscribe(loginData) {
   })
 })
 
-events.rename$.subscribe(function handleLoginSubscribe(renameData) {
+events.rename$.subscribe(function handleRenameSubscribe(renameData) {
   stateSubject.onNext(function handleOnNext(currentState) {
-    // TODO: Make pure. -MANI
-    const oldNameIndex = currentState.indexOf(renameData.oldName)
-    currentState[oldNameIndex] = renameData.newName
+    const withoutOldNameState = currentState.filter(
+      function handleFilter(userData) {
+        return userData.name !== renameData.oldName
+      }
+    )
+    withoutOldNameState.push({name: renameData.newName})
+    return withoutOldNameState
   })
 })
 
 events.logout$.subscribe(function handleLoginSubscribe(logoutData) {
   stateSubject.onNext(function logoutEventHandler(currentState) {
     // TODO: Make pure. -MANI
-    return currentState.filter(function filterCurrentState(userData) {
+    return currentState.filter(function handleFilter(userData) {
       return userData.name !== logoutData.name
     })
   })

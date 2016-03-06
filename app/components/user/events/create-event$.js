@@ -1,5 +1,4 @@
 const Rx = require('rx')
-const event$ = new Rx.Subject()
 const COMPONENT_NAME = 'user'
 function create(events) {
   const event$Collection = []

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app/index.js",
     "watch:start": "nodemon -x 'npm start'",
-    "test": "tap app/*/*.test.js",
+    "test": "tap app/**/**/*.test.js --reporter=spec",
     "watch:test": "nodemon -x 'npm test'",
     "lint": "eslint -c .eslintrc.js .",
     "docker:build": "docker build -t marcusnielsen/rxjs-server .",
@@ -20,6 +20,7 @@
     "rx": "^4.0.7",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.5",
-    "tap": "^5.4.4"
+    "tap": "^5.4.4",
+    "typescript": "^1.8.7"
   }
 }
