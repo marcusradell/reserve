@@ -29,7 +29,7 @@ const state$ = stateSubject
 state$
 .debounce(DB_STATE_LOG_DEBOUNCE_MS)
 .subscribe(function handleStateSubscribe(logDataCollection) {
-  if (process.env.LOG_MOCKED_DB !== 'true') {
+  if (process.env.APP_LOG_MOCKED_DB !== 'true') {
     return;
   }
   /* eslint-disable no-console */

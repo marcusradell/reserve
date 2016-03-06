@@ -1,6 +1,6 @@
-PORT=8080
-HOST=0.0.0.0
-LOG_MOCKED_DB=true
-LOG_LEVELS="info, warning, error"
-LOG_GROUPS=""
+APP_PORT=8080
+APP_HOST=0.0.0.0
+APP_LOG_MOCKED_DB=true
+APP_LOG_LEVELS="info, warning, error"
+APP_LOG_GROUPS=""
 NODE_ENV=production

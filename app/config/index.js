@@ -3,7 +3,7 @@ console.log(
   `Config read with NODE_ENV: [${process.env.NODE_ENV}]`
 )
 /* eslint-enable no-console */
-
+const PREFIX = 'APP_'
 const localDevelopment = {
   PORT: '3000',
   HOST: '0.0.0.0',
@@ -15,5 +15,5 @@ const localDevelopment = {
 const config = process.env.NODE_ENV === 'development' ? localDevelopment : {}
 
 Object.keys(config).forEach(function handleConfigMap(key) {
-  process.env[key] = config[key]
+  process.env[PREFIX + key] = config[key]
 })

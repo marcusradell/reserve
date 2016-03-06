@@ -2,12 +2,12 @@ require('../config')
 const rootTest = require('tap').test
 const serverCreate = require('../server')
 const ioClient = require('socket.io-client')
-const socketURL = `http://${process.env.HOST}:${process.env.PORT}`
+const socketURL = `http://${process.env.APP_HOST}:${process.env.APP_PORT}`
 const serverOptions = {
   logLevels: 'none',
   logGroups: 'none',
-  port: process.env.PORT,
-  host: process.env.HOST
+  port: process.env.APP_PORT,
+  host: process.env.APP_HOST
 }
 const ioOptions = {
   transports: ['websocket'],
