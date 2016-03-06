@@ -8,6 +8,7 @@
     "watch:start": "nodemon -x 'npm start'",
     "test": "tap app/**/**/*.test.js --reporter=spec",
     "watch:test": "nodemon -x 'npm test'",
+    "watch:unit-test": "nodemon -x 'tap app/server/handle-connect-factory.test.js --reporter=spec'",
     "lint": "eslint -c .eslintrc.js .",
     "docker:build": "docker build -t marcusnielsen/rxjs-server .",
     "docker:run": "docker run -p 3000:8080 -d --env-file .docker-env marcusnielsen/rxjs-server"

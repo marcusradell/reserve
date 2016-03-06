@@ -16,9 +16,6 @@ function create(event$, log) {
       )
       event$Unsubscribe.dispose()
     })
-    require('../components/user').events.login('userme')
-    require('../components/user').events.rename('userme', 'useru')
-    require('../components/user').events.logout('useru')
   }
 }
 
