@@ -1,3 +1,14 @@
+/** @module config/environment */
+
+/**
+* Creates the configuration object.
+* @param {Object} envVarCollection - Usually the variable `process.env`.
+* @param {String} prefix -
+* The prefix used on all environment variables as a namespace.
+* @returns {Object} The development config object containing
+* all the environment variables with given prefix,
+* but with the prefix stripped from the returned object's keys.
+*/
 function create(envVarCollection, prefix) {
   const envVarKeys = Object.keys(envVarCollection)
   const config = {}

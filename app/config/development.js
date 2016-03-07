@@ -1,7 +1,9 @@
-// TODO: Should .gitignore this file
-// and put content in development.template.js -MANI
-// Also, then, add support for missing that file. -MANI
+/** @module config/development */
 
+/**
+* Creates a default development configuration.
+* @returns {Object} The development config object.
+*/
 function create() {
   return {
     PORT: '3000',
