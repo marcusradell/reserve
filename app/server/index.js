@@ -3,9 +3,10 @@ const SocketIo = require('socket.io')
 const log = require('../components/log')
 const user = require('../components/user')
 const logProducerConsole = require('../components/log-producer-console')
-const handleConnectFactory = require('./handle-connect-factory')
-const createEvent$Factory = require('./create-event$-factory')
+const handleConnectFactory = require('./handle-connect')
+const createEvent$Factory = require('./create-event$')
 const createEvent$ = createEvent$Factory.create(user)
+const configFactory = require('../config')
 
 function closeFactory(server) {
   return function close () {
@@ -14,7 +15,7 @@ function closeFactory(server) {
         log.events.add(
           log.levels.info,
           log.groups.httpServer,
-          `Server closed on [${process.env.HOST}:${process.env.PORT}]`
+          'Server closed'
         )
         resolveClose()
       })
@@ -31,7 +32,8 @@ function httpServerListen(httpServer, port, host) {
         log.events.add(
           log.levels.info,
           log.groups.httpServer,
-          `Listening on [${process.env.HOST}:${process.env.PORT}]`
+          'Listening on ' +
+          `[${httpServer.address().address}:${httpServer.address().port}]`
         )
         resolve()
       }
@@ -46,10 +48,11 @@ function handleThenSetupIoServerFactory(httpServer, event$, logModule) {
   }
 }
 
-function create(options) {
-  logProducerConsole.create(log, options.logLevels, options.logGroups)
+function create() {
+  const config = configFactory.create()
+  logProducerConsole.create(log, config.LOG_LEVELS, config.LOG_GROUPS)
   const httpServer = http.createServer()
-  return httpServerListen(httpServer, options.port, options.host)
+  return httpServerListen(httpServer, config.PORT, config.HOST)
   .then(
     handleThenSetupIoServerFactory(
       httpServer,
@@ -60,7 +63,8 @@ function create(options) {
   .then(function handleThenReturnServerData() {
     return {
       httpServer,
-      close: closeFactory(httpServer)
+      close: closeFactory(httpServer),
+      config
     }
   })
 }

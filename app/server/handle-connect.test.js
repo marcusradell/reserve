@@ -1,6 +1,6 @@
 const rootTest = require('tap').test
 const Rx = require('rx')
-const handleConnectFactory = require('./handle-connect-factory')
+const handleConnectFactory = require('./handle-connect')
 const log = require('../components/log')
 
 rootTest('handleConnectFactory', function handleRootTest(unitTests) {

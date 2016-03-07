@@ -1,47 +1,52 @@
-require('../config')
+const configFactory = require('../config')
 const rootTest = require('tap').test
 
+/* eslint-disable max-statements */
 rootTest('config', function onConfigTest(test) {
-  const envKeys = Object.keys(process.env)
+  /* eslint-enable max-statements */
+  const config = configFactory.create()
+  const configKeys = Object.keys(config)
+  test.strictEquals(
+    configFactory.PREFIX,
+    'RSRV_',
+    'should have prefix "RSRV_"'
+  )
   test.strictEquals(
     Boolean(process.env.NODE_ENV.length),
     true,
     'should require a value for NODE_ENV'
   )
   test.strictEquals(
-    Boolean(process.env.APP_PORT.length),
+    Boolean(config.PORT.length),
     true,
     'should require a value for PORT'
   )
   test.strictEquals(
-    Boolean(process.env.APP_HOST.length),
+    Boolean(config.HOST.length),
     true,
     'should require a value for HOST'
   )
   const INDEX_OF_NOT_FOUND = -1
   test.strictEquals(
-    envKeys.indexOf('APP_LOG_MOCKED_DB') !== INDEX_OF_NOT_FOUND,
+    configKeys.indexOf('LOG_MOCKED_DB') !== INDEX_OF_NOT_FOUND,
     true,
-    'should have env key LOG_MOCKED_DB'
+    'should have config variable LOG_MOCKED_DB'
   )
   test.strictEquals(
-    envKeys.indexOf('APP_LOG_LEVELS') !== INDEX_OF_NOT_FOUND,
+    configKeys.indexOf('LOG_LEVELS') !== INDEX_OF_NOT_FOUND,
     true,
-    'should have env key LOG_LEVELS'
+    'should have config variable LOG_LEVELS'
   )
   test.strictEquals(
-    envKeys.indexOf('APP_LOG_GROUPS') !== INDEX_OF_NOT_FOUND,
+    configKeys.indexOf('LOG_GROUPS') !== INDEX_OF_NOT_FOUND,
     true,
-    'should have env key LOG_GROUPS'
+    'should have config variable LOG_GROUPS'
   )
-  const appEnvCount = envKeys.filter(function handleFilter(envKey) {
-    return envKey.startsWith('APP_')
-  }).length
-  const EXPECTED_APP_ENV_COUNT = 5
+  const EXPECTED_CONFIG_LENGTH = 5
   test.strictEquals(
-    appEnvCount,
-    EXPECTED_APP_ENV_COUNT,
-    'should have 6 envs with prefix "APP_"'
+    configKeys.length,
+    EXPECTED_CONFIG_LENGTH,
+    'should have 5 config variables'
   )
   test.done()
 })

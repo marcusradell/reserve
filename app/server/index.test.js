@@ -2,13 +2,6 @@ require('../config')
 const rootTest = require('tap').test
 const serverCreate = require('../server')
 const ioClient = require('socket.io-client')
-const socketURL = `http://${process.env.APP_HOST}:${process.env.APP_PORT}`
-const serverOptions = {
-  logLevels: 'none',
-  logGroups: 'none',
-  port: process.env.APP_PORT,
-  host: process.env.APP_HOST
-}
 const ioOptions = {
   transports: ['websocket'],
   'force new connection': true
@@ -16,8 +9,10 @@ const ioOptions = {
 
 rootTest('server', function handleTape(test) {
   return new Promise(function handlePromise(resolve, reject) {
-    serverCreate.create(serverOptions)
+    serverCreate.create()
     .then(function handleCreateThen(serverData) {
+      const config = serverData.config
+      const socketURL = `http://${config.HOST}:${config.PORT}`
       const socket = ioClient(socketURL, ioOptions)
 
       socket.on('connect', function handleConnect() {

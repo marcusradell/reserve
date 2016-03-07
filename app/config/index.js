@@ -1,19 +1,25 @@
-/* eslint-disable no-console */
-console.log(
-  `Config read with NODE_ENV: [${process.env.NODE_ENV}]`
-)
-/* eslint-enable no-console */
-const PREFIX = 'APP_'
-const localDevelopment = {
-  PORT: '3000',
-  HOST: '0.0.0.0',
-  LOG_MOCKED_DB: 'false',
-  LOG_LEVELS: 'info, warning, error',
-  LOG_GROUPS: ''
+const developmentConfigFactory = require('./development')
+const environmentConfigFactory = require('./environment')
+const PREFIX = 'RSRV_'
+
+function create() {
+  /* eslint-disable no-console */
+  console.log(
+    `Config read with NODE_ENV: [${process.env.NODE_ENV}]`
+  )
+  /* eslint-enable no-console */
+  const environmentConfig = environmentConfigFactory.create(
+    process.env, PREFIX
+  )
+  if (process.env.NODE_ENV === 'development') {
+    return Object.assign(
+      {}, environmentConfig, developmentConfigFactory.create()
+    )
+  }
+  return Object.assign({}, environmentConfig)
 }
 
-const config = process.env.NODE_ENV === 'development' ? localDevelopment : {}
-
-Object.keys(config).forEach(function handleConfigMap(key) {
-  process.env[PREFIX + key] = config[key]
-})
+module.exports = {
+  create,
+  PREFIX
+}

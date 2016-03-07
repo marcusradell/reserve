@@ -2,6 +2,7 @@
 
 const Rx = require('rx')
 const events = require('../events')
+const config = require('../../../config').create()
 const stateSubject = new Rx.Subject()
 const DB_STATE_LOG_DEBOUNCE_MS = 200
 const JSON_INDENTS = 2
