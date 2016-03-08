@@ -14,7 +14,8 @@
     "lint": "eslint -c .eslintrc.js .",
     "docker:build": "docker build -t marcusnielsen/rxjs-server .",
     "docker:run": "docker run -p 3000:8080 -d --env-file .docker-env marcusnielsen/rxjs-server",
-    "jsdoc": "jsdoc -d ./jsdoc/ -r -c jsdoc.config.json",
+    "docker:up": "docker-compose build && docker-compose up",
+    "jsdoc": "jsdoc -d ./jsdoc/ -r -c jsdoc.config.json -P ./package.json",
     "watch:jsdoc": "nodemon -x 'npm run jsdoc' --ignore 'jsdoc/*.js' --ignore 'app/**/*.test.js'"
   },
   "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",

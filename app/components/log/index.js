@@ -1,7 +1,7 @@
 const groups = require('./groups')
 const levels = require('./levels')
 const events = require('./events')
-require('./repository')
+// TODO: Decide how to handle the fake repository. -MANI
 
 module.exports = {
   events,

@@ -28,11 +28,6 @@ rootTest('config', function onConfigTest(test) {
   )
   const INDEX_OF_NOT_FOUND = -1
   test.strictEquals(
-    configKeys.indexOf('LOG_MOCKED_DB') !== INDEX_OF_NOT_FOUND,
-    true,
-    'should have config variable LOG_MOCKED_DB'
-  )
-  test.strictEquals(
     configKeys.indexOf('LOG_LEVELS') !== INDEX_OF_NOT_FOUND,
     true,
     'should have config variable LOG_LEVELS'
@@ -42,7 +37,7 @@ rootTest('config', function onConfigTest(test) {
     true,
     'should have config variable LOG_GROUPS'
   )
-  const EXPECTED_CONFIG_LENGTH = 5
+  const EXPECTED_CONFIG_LENGTH = 4
   test.strictEquals(
     configKeys.length,
     EXPECTED_CONFIG_LENGTH,

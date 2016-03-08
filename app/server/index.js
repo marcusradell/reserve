@@ -49,8 +49,24 @@ function handleThenSetupIoServerFactory(httpServer, event$, logModule) {
 }
 
 function create() {
-  const config = configFactory.create()
+  // TODO: The config adds to the log,
+  // but logProducerConsole is not yet a subscriber.
+  // Solve by saving the stream until the logProducers are subscribing. -MANI
+  const config = configFactory.create(log)
   logProducerConsole.create(log, config.LOG_LEVELS, config.LOG_GROUPS)
+  log.events.add(
+    log.levels.info,
+    log.groups.httpServer,
+    `Server starting with NODE_ENV: [${process.env.NODE_ENV}]`
+  )
+  // TODO: Obfuscate values before logging. -MANI
+  const JSON_SPACING = 2
+  log.events.add(
+    log.levels.info,
+    log.groups.httpServer,
+    `Config loaded with values: \n` +
+    `CONFIG START\n${JSON.stringify(config, null, JSON_SPACING)}\nCONFIG END`
+  )
   const httpServer = http.createServer()
   return httpServerListen(httpServer, config.PORT, config.HOST)
   .then(

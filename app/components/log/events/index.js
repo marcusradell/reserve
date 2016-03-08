@@ -1,14 +1,16 @@
 const Rx = require('rx')
 
-const add$ = new Rx.Subject()
+const addSubject = new Rx.Subject()
 
 function add(level, group, message) {
-  add$.onNext({
+  addSubject.onNext({
     level,
     group,
     message
   })
 }
+
+const add$ = addSubject.publish().refCount()
 
 module.exports = {
   add$,

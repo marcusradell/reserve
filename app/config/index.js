@@ -19,11 +19,6 @@ const PREFIX = 'RSRV_'
 * @returns {Object} The config object.
 */
 function create() {
-  /* eslint-disable no-console */
-  console.log(
-    `Config read with NODE_ENV: [${process.env.NODE_ENV}]`
-  )
-  /* eslint-enable no-console */
   const environmentConfig = environmentConfigFactory.create(
     process.env, PREFIX
   )

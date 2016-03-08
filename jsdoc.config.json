@@ -1,16 +1,21 @@
 {
-    "tags": {
-        "allowUnknownTags": true,
-        "dictionaries": ["jsdoc","closure"]
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "source": {
+    "include": [ "app/" ],
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": ".+\\.test.js$"
+  },
+  "plugins": [],
+  "templates": {
+    "applicationName": "rxjs-server",
+    "meta": {
+      "title": "rxjs-server",
+      "description": "a hobby project with websocket and rxjs",
+      "keyword": "jsdoc"
     },
-    "source": {
-        "include": [ "app/" ],
-        "includePattern": ".+\\.js(doc)?$",
-        "excludePattern": ".+\\.test.js$"
-    },
-    "plugins": [],
-    "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": false
-    }
+    "linenums": true
+  }
 }

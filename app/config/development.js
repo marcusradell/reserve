@@ -8,7 +8,6 @@ function create() {
   return {
     PORT: '3000',
     HOST: '0.0.0.0',
-    LOG_MOCKED_DB: 'false',
     LOG_LEVELS: 'info, warning, error',
     LOG_GROUPS: ''
   }
