@@ -11,7 +11,7 @@
     "test:watch": "nodemon -x 'npm test'",
     "tw": "npm run test:watch",
     "test:cover": "tap ./app/**/**/*.test.js --reporter=classic --cov --coverage-report=lcov",
-    "test:unit:watch": "nodemon -x 'tap app/config/index.test.js'",
+    "test:unit:watch": "nodemon -x 'tap app/components/user/index.test.js'",
     "tuw": "npm run test:unit:watch",
     "lint": "eslint -c .eslintrc.js .",
     "docker:build": "docker build -t marcusnielsen/rxjs-server .",
