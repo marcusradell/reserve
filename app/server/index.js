@@ -2,7 +2,7 @@ const http = require('http')
 const SocketIo = require('socket.io')
 const log = require('../components/log')
 const user = require('../components/user')
-const logProducerConsole = require('../components/log-producer-console')
+const logConsumerConsole = require('../components/log-consumer-console')
 const handleConnectFactory = require('./handle-connect')
 const createEvent$Factory = require('./create-event$')
 const createEvent$ = createEvent$Factory.create(user)
@@ -53,7 +53,7 @@ function create() {
   // but logProducerConsole is not yet a subscriber.
   // Solve by saving the stream until the logProducers are subscribing. -MANI
   const config = configFactory.create(log)
-  logProducerConsole.create(log, config.LOG_LEVELS, config.LOG_GROUPS)
+  logConsumerConsole.create(log, config.LOG_LEVELS, config.LOG_GROUPS)
   log.events.add(
     log.levels.info,
     log.groups.httpServer,
