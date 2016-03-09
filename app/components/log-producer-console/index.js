@@ -14,15 +14,29 @@ function create(log, levels, groups) {
       .split(',')
       .indexOf(logData.group) !== INDEX_OF_NOT_FOUND
   })
-  .subscribe(function handleLogSubscribe(logData) {
-    const FIRST_LETTER = 0
-    /* eslint-disable no-console */
-    console.log(
-      `[${logData.level[FIRST_LETTER]}]` +
-      `[${logData.group}]:` +
-      `${logData.message}`
-    )
-    /* eslint-enable no-console */
+  .map(function functionName(logData) {
+    return function produceLog() {
+      const FIRST_LETTER = 0
+      const message =
+        `[${logData.level[FIRST_LETTER]}]` +
+        `[${logData.group}]:` +
+        ` ${logData.message}`
+      /* eslint-disable no-console */
+      switch (logData.level) {
+      case log.levels.info:
+        return console.info(message)
+      case log.levels.warning:
+        return console.error(message)
+      case log.levels.error:
+        return console.error(message)
+      default:
+        return console.log(message)
+      /* eslint-enable no-console */
+      }
+    }
+  })
+  .subscribe(function handleLogSubscribe(produceLog) {
+    produceLog()
   })
 }
 
