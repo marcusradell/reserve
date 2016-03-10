@@ -1,5 +1,6 @@
 module.exports = {
   httpServer: 'http-server',
   wsServer: 'ws-server',
-  rxjs: 'rxjs'
+  rxjs: 'rxjs',
+  event: 'event'
 }

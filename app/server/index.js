@@ -3,7 +3,7 @@ const SocketIo = require('socket.io')
 const log = require('../components/log')
 const userFactory = require('../components/user')
 const logConsumerConsole = require('../components/log-consumer-console')
-const handleConnectFactory = require('./handle-connect')
+const socketConnectionFactory = require('./socket-connection')
 const configFactory = require('../config')
 const allEventStreamCollectionsFactory = require(
   './all-event-stream-collections'
@@ -42,17 +42,14 @@ function httpServerListen(httpServer, port, host) {
   })
 }
 
-function handleThenSetupIoServerFactory(httpServer, event$, logModule) {
+function createSetupIoServerFn(httpServer, event$, logModule) {
   return function handleThenSetupIoServer() {
     const ioServer = SocketIo.listen(httpServer)
-    ioServer.on('connection', handleConnectFactory.create(event$, logModule))
+    ioServer.on('connection', socketConnectionFactory.create(event$, logModule))
   }
 }
 
 function create() {
-  // TODO: The config adds to the log,
-  // but logProducerConsole is not yet a subscriber.
-  // Solve by saving the stream until the logProducers are subscribing. -MANI
   const config = configFactory.create(log)
   logConsumerConsole.create(log, config.LOG_LEVELS, config.LOG_GROUPS)
   log.events.add(
@@ -69,11 +66,23 @@ function create() {
     `CONFIG START\n${JSON.stringify(config, null, JSON_SPACING)}\nCONFIG END`
   )
   const httpServer = http.createServer()
+  const user = userFactory.create()
+  const event$ = allEventStreamCollectionsFactory.create(
+    [user.events.event$Collection]
+  )
+  event$.subscribe(function logEvent(eventData) {
+    log.events.add(
+      log.levels.info,
+      log.groups.event,
+      JSON.stringify(eventData, null, JSON_SPACING)
+    )
+  })
+  user.actions.login('Moa')
   return httpServerListen(httpServer, config.PORT, config.HOST)
   .then(
-    handleThenSetupIoServerFactory(
+    createSetupIoServerFn(
       httpServer,
-      allEventStreamCollectionsFactory.create(userFactory),
+      event$,
        log
     )
   )

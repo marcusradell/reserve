@@ -1,9 +1,9 @@
-const rootTest = require('tap').test
+const rootTest = require('tap')
 const Rx = require('rxjs')
-const handleConnectFactory = require('./handle-connect')
+const handleConnectFactory = require('./socket-connection')
 const log = require('../components/log')
 
-rootTest('handleConnectFactory', function handleRootTest(unitTests) {
+rootTest.test('handle-connect', function handleRootTest(unitTests) {
   const mockedEvent$ = new Rx.Subject()
 
   unitTests.test('create', function handleUnitTest(unitTest) {

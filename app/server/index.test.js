@@ -1,35 +1,30 @@
 require('../config')
-const rootTest = require('tap').test
-const serverCreate = require('../server')
+const unitTests = require('tap')
+const serverFactory = require('../server')
 const ioClient = require('socket.io-client')
 const ioOptions = {
   transports: ['websocket'],
   'force new connection': true
 }
 
-rootTest('server', function handleTape(test) {
-  return new Promise(function handlePromise(resolve, reject) {
-    serverCreate.create()
-    .then(function handleCreateThen(serverData) {
-      const config = serverData.config
-      const socketURL = `http://${config.HOST}:${config.PORT}`
-      const socket = ioClient(socketURL, ioOptions)
-
-      socket.on('connect', function handleConnect() {
-        socket.disconnect()
-        test.pass('should connect a client.')
-      })
-
-      socket.on('error', function handleData(err) {
-        reject(err)
-        serverData.close()
-      })
-
-      socket.on('disconnect', function handleClose() {
-        test.pass('should disconnect a client.')
-        serverData.close()
-        resolve()
-      })
+unitTests.test('server', function handleUnitTest(unitTest) {
+  serverFactory.create()
+  .then(function handleCreateThen(serverData) {
+    const config = serverData.config
+    const socketURL = `http://${config.HOST}:${config.PORT}`
+    const socket = ioClient(socketURL, ioOptions)
+    socket.on('connect', function handleConnect() {
+      unitTest.pass('should connect a client.')
+      socket.disconnect()
+    })
+    socket.on('error', function handleData(err) {
+      serverData.close()
+      throw new Error(err)
+    })
+    socket.on('disconnect', function handleClose() {
+      unitTest.pass('should disconnect a client.')
+      serverData.close()
+      unitTest.done()
     })
   })
 })

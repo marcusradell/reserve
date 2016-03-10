@@ -2,7 +2,7 @@ function create(event$, log) {
   return function handleConnect(socket) {
     log.events.add(
       log.levels.info,
-      log.groups.httpServer,
+      log.groups.wsServer,
       'A client connected.'
     )
     const event$Subscription = event$.subscribe(function handleSubscribe(val) {
