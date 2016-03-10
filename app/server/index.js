@@ -4,8 +4,10 @@ const log = require('../components/log')
 const userFactory = require('../components/user')
 const logConsumerConsole = require('../components/log-consumer-console')
 const handleConnectFactory = require('./handle-connect')
-const allEvent$CollectionsFactory = require('./all-event$-collections')
 const configFactory = require('../config')
+const allEventStreamCollectionsFactory = require(
+  './all-event-stream-collections'
+)
 
 function closeFactory(server) {
   return function close () {
@@ -71,7 +73,7 @@ function create() {
   .then(
     handleThenSetupIoServerFactory(
       httpServer,
-      allEvent$CollectionsFactory.create(userFactory),
+      allEventStreamCollectionsFactory.create(userFactory),
        log
     )
   )
@@ -84,4 +86,6 @@ function create() {
   })
 }
 
-  export default const create = create
+module.exports = {
+  create
+}

@@ -1,11 +1,11 @@
 const Rx = require('rxjs')
 const eventsFactory = require('./interactions/events')
-const event$Composer = require('../../helpers/event$Composer')
+const eventStreamComposer = require('../../helpers/eventStreamComposer')
 const actionsFactory = require('./interactions/actions')
 const repositoryFactory = require('./repository')
 
 function create() {
-  const events = eventsFactory.create(Rx, event$Composer)
+  const events = eventsFactory.create(Rx, eventStreamComposer)
   const actions = actionsFactory.create(events)
   const repository = repositoryFactory.create(Rx, events)
 

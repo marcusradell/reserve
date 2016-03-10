@@ -15,7 +15,6 @@ unitTests.test('compose', function handleUnitTest(unitTest) {
     },
     'test'
   )
-  console.dir(event$Collection, 2);
   const eventASubscription = event$Collection
   .subscribe(function handleSubscribe(event$Data) {
     eventASubscription.unsubscribe()
