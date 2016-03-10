@@ -23,18 +23,24 @@ Since this project is backend only, here's some of the starting points.
 * `npm run jsdoc` to rebuild the docs.
 * `npm run docker:up` for docker-compose setup and run.
 * `npm start` will test your config, and then start the app.
+* `npm run eslint` will lint your code. You should really use a plugin to your IDE instead.
 * `npm run` to list all commands.
 
 # File structure
 * `app/`
   * Creates and runs the server.
-  * `/server`
+  * `server/`
   * Sets up the http server, websocket server and sets up the event streams components.
-  * `/config`
+  * `config/`
     * Reads the env vars with the app prefix.
     * If development mode, loads default values.
-  * `/components`
+  * `components/`
     * All the middleware component for the app.
+      * `interactions`
+        * Contains the atomic actions and event streams. The events object also contains a merged event$Collection object.
+      * `repository`
+        * Holds the Reduced state. Can be used for initializing a starting value.
+  * `helpers/`
 
 # Tests
 Unit tests are written inside the unit to make the units atomic.
@@ -43,8 +49,9 @@ Only use require on the top level of each module/component as to avoid side-effe
 
 Contain all dynamic code in factories/#create-functions so code can be unit tested in isolation.
 
-# Contributions
-* Yes, please.
+# Contributing
+First read the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # // TODO:
 * Complete the factory #create() pattern.
@@ -62,3 +69,4 @@ Contain all dynamic code in factories/#create-functions so code can be unit test
 * Read RxJS docs to understand exactly when data flows from subject to subscriber.
 * Add https wss support with openssl.
 * Get deepEquals assertion with strict equals. Node-tap seem to use == instead of ===.
+* Include a hash of the previous event data to secure badly inserted data.

@@ -1,11 +1,10 @@
 const http = require('http')
 const SocketIo = require('socket.io')
 const log = require('../components/log')
-const user = require('../components/user')
+const userFactory = require('../components/user')
 const logConsumerConsole = require('../components/log-consumer-console')
 const handleConnectFactory = require('./handle-connect')
-const createEvent$Factory = require('./create-event$')
-const createEvent$ = createEvent$Factory.create(user)
+const allEvent$CollectionsFactory = require('./all-event$-collections')
 const configFactory = require('../config')
 
 function closeFactory(server) {
@@ -72,7 +71,7 @@ function create() {
   .then(
     handleThenSetupIoServerFactory(
       httpServer,
-      createEvent$(),
+      allEvent$CollectionsFactory.create(userFactory),
        log
     )
   )

@@ -18,7 +18,7 @@ function create(log, levels, groups) {
     return function produceLog() {
       const FIRST_LETTER = 0
       const message =
-        `[${logData.level[FIRST_LETTER]}]` +
+        `\n[${logData.level[FIRST_LETTER]}]` +
         `[${logData.group}]:` +
         ` ${logData.message}`
       /* eslint-disable no-console */
