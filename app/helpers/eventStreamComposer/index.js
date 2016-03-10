@@ -13,7 +13,7 @@ function create(events, namespace) {
       }
     })
   })
-  return Rx.Observable.merge(event$Collection[0], event$Collection[1])
+  return Rx.Observable.merge(...event$Collection)
 }
 
 module.exports = {
