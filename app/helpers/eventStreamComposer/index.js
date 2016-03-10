@@ -1,4 +1,4 @@
-const Rx = require('rxjs')
+const Rx = require('rxjs/Rx')
 
 function create(events, namespace) {
   const eventKeys = Object.keys(events)
@@ -13,7 +13,7 @@ function create(events, namespace) {
       }
     })
   })
-  return Rx.Observable.merge(event$Collection)
+  return Rx.Observable.merge(event$Collection[0], event$Collection[1])
 }
 
 module.exports = {

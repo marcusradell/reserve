@@ -1,13 +1,21 @@
 const unitTests = require('tap')
-const Rx = require('rxjs')
-const event$Composer = require('./index')
+const Rx = require('rxjs/Rx')
+const eventStreamComposer = require('./index')
 
 unitTests.test('compose', function handleUnitTest(unitTest) {
   const NUMBER_OF_TESTS = 2
   unitTest.plan(NUMBER_OF_TESTS)
+
   const event$A = new Rx.Subject()
   const event$B = new Rx.Subject()
-  const event$Collection = event$Composer.create({event$A, event$B}, 'test')
+  const event$Collection = eventStreamComposer.create(
+    {
+      event$A,
+      event$B
+    },
+    'test'
+  )
+  console.dir(event$Collection[0], 2);
   const eventASubscription = event$Collection
   .subscribe(function handleSubscribe(event$Data) {
     eventASubscription.unsubscribe()
