@@ -1,6 +1,4 @@
-/** @module app */
-
-const serverFactory = require('./server')
+import serverFactory from './server'
 
 /**
 Entry point for the application and thus selfexecuting.

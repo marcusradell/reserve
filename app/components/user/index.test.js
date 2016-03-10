@@ -3,9 +3,9 @@ const userFactory = require('../user')
 
 unitTests.test('login', function handleUnitTest(unitTest) {
   const user = userFactory.create()
-  const disposer = user.events.login$.subscribe(
+  const subscription = user.events.login$.subscribe(
     function handleStateSubscribe(loginData) {
-      disposer.dispose()
+      subscription.unsubscribe()
       unitTest.strictEquals(
         loginData.name,
         'Marcus Nielsen',
@@ -19,9 +19,9 @@ unitTests.test('login', function handleUnitTest(unitTest) {
 
 unitTests.test('rename', function handleUnitTest(unitTest) {
   const user = userFactory.create()
-  const disposer = user.events.rename$.subscribe(
+  const subscription = user.events.rename$.subscribe(
     function handleSubscribe(renameData) {
-      disposer.dispose()
+      subscription.unsubscribe()
       unitTest.deepEquals(
         renameData,
         {
@@ -38,9 +38,9 @@ unitTests.test('rename', function handleUnitTest(unitTest) {
 
 unitTests.test('logout', function handleUnitTest(unitTest) {
   const user = userFactory.create()
-  const disposer = user.events.logout$.subscribe(
+  const subscription = user.events.logout$.subscribe(
     function handleSubscribe(logoutData) {
-      disposer.dispose()
+      subscription.unsubscribe()
       unitTest.strictEquals(
         logoutData.name,
         'Marcus Rådell',

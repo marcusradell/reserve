@@ -1,9 +1,9 @@
-const Rx = require('rx')
+const Rx = require('rxjs')
 
 const addSubject = new Rx.Subject()
 
 function add(level, group, message) {
-  addSubject.onNext({
+  addSubject.next({
     level,
     group,
     message

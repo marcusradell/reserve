@@ -1,5 +1,5 @@
 const unitTests = require('tap')
-const Rx = require('rx')
+const Rx = require('rxjs')
 const event$Composer = require('./index')
 
 unitTests.test('compose', function handleUnitTest(unitTest) {
@@ -8,9 +8,9 @@ unitTests.test('compose', function handleUnitTest(unitTest) {
   const event$A = new Rx.Subject()
   const event$B = new Rx.Subject()
   const event$Collection = event$Composer.create({event$A, event$B}, 'test')
-  const eventADisposer = event$Collection
+  const eventASubscription = event$Collection
   .subscribe(function handleSubscribe(event$Data) {
-    eventADisposer.dispose()
+    eventASubscription.unsubscribe()
     const expected = {
       header: {
         event$Name: 'event$A',
@@ -23,11 +23,11 @@ unitTests.test('compose', function handleUnitTest(unitTest) {
 
     unitTest.deepEquals(event$Data, expected)
   })
-  event$A.onNext({stuff: 'thing'})
+  event$A.next({stuff: 'thing'})
 
-  const eventBDisposer = event$Collection
+  const eventBSubscription = event$Collection
   .subscribe(function handleSubscribe(event$Data) {
-    eventBDisposer.dispose()
+    eventBSubscription.unsubscribe()
     const expected = {
       header: {
         event$Name: 'event$A',
@@ -41,5 +41,5 @@ unitTests.test('compose', function handleUnitTest(unitTest) {
     unitTest.deepEquals(event$Data, expected)
     unitTest.done()
   })
-  event$A.onNext({bodaschious: 'bodylicious'})
+  event$A.next({bodaschious: 'bodylicious'})
 })

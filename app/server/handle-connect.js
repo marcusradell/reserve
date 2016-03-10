@@ -5,7 +5,7 @@ function create(event$, log) {
       log.groups.httpServer,
       'A client connected.'
     )
-    const event$Unsubscribe = event$.subscribe(function handleSubscribe(val) {
+    const event$Subscription = event$.subscribe(function handleSubscribe(val) {
       socket.emit('event$', val)
     })
     socket.on('disconnect', function handleDisconnect() {
@@ -14,7 +14,7 @@ function create(event$, log) {
         log.groups.wsServer,
         'A client disconnected.'
       )
-      event$Unsubscribe.dispose()
+      event$Subscription.unsubscribe()
     })
   }
 }

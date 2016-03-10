@@ -1,5 +1,5 @@
 const rootTest = require('tap').test
-const Rx = require('rx')
+const Rx = require('rxjs')
 const handleConnectFactory = require('./handle-connect')
 const log = require('../components/log')
 
@@ -48,7 +48,7 @@ rootTest('handleConnectFactory', function handleRootTest(unitTests) {
       )
     }
     handleConnect(mockedSocket)
-    mockedEvent$.onNext('hello')
+    mockedEvent$.next('hello')
   })
   unitTests.done()
 })

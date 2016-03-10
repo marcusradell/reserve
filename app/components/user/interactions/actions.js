@@ -1,14 +1,14 @@
 function create(events) {
   function login(name) {
-    events.login$.onNext({name})
+    events.login$.next({name})
   }
 
   function rename(oldName, newName) {
-    events.rename$.onNext({oldName, newName})
+    events.rename$.next({oldName, newName})
   }
 
   function logout(name) {
-    events.logout$.onNext({name})
+    events.logout$.next({name})
   }
 
   return {

@@ -1,4 +1,4 @@
-const Rx = require('rx')
+const Rx = require('rxjs')
 const eventsFactory = require('./interactions/events')
 const event$Composer = require('../../helpers/event$Composer')
 const actionsFactory = require('./interactions/actions')
