@@ -1,4 +1,4 @@
-const Rx = require('rxjs/Rx')
+const Rx = require('rxjs')
 
 function create(events, namespace) {
   const eventKeys = Object.keys(events)

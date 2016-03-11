@@ -1,6 +1,6 @@
 const http = require('http')
 const SocketIo = require('socket.io')
-const Rx = require('rxjs/rx')
+const Rx = require('rxjs')
 const logFactory = require('../components/log')
 const userFactory = require('../components/user')
 const logConsumerConsole = require('../components/log-consumer-console')

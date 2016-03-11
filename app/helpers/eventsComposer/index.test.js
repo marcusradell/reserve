@@ -1,5 +1,5 @@
 const unitTests = require('tap')
-const Rx = require('rxjs/Rx')
+const Rx = require('rxjs')
 const eventStreamComposer = require('./index')
 
 unitTests.test('compose', function handleUnitTest(unitTest) {

@@ -1,5 +1,5 @@
 const tests = require('tap')
-const Rx = require('rxjs/rx')
+const Rx = require('rxjs')
 const eventsFactory = require('./events')
 
 tests.test('events', function handleUnitTest(test) {
