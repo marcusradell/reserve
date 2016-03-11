@@ -1,6 +1,7 @@
 const http = require('http')
 const SocketIo = require('socket.io')
-const log = require('../components/log')
+// TODO: Missing factory pattern.
+const logFactory = require('../components/log')
 const userFactory = require('../components/user')
 const logConsumerConsole = require('../components/log-consumer-console')
 const socketConnectionFactory = require('./socket-connection')
@@ -8,7 +9,7 @@ const configFactory = require('../config')
 const eventsFactory = require('./interactions/events')
 const actionsFactory = require('./interactions/actions')
 
-function closeFactory(server) {
+function closeFactory(server, log) {
   return function close () {
     return new Promise(function handleDestroyPromise(resolveClose) {
       server.close(function handleClose() {
@@ -23,17 +24,18 @@ function closeFactory(server) {
   }
 }
 
-function httpServerListen(httpServer, port, host) {
+function httpServerListen(serverData, log) {
   return new Promise(function handleCreatePromise(resolve) {
-    httpServer.listen(
-      port,
-      host,
+    serverData.httpServer.listen(
+      serverData.port,
+      serverData.host,
       function handleServerListen() {
         log.events.add(
           log.levels.info,
           log.groups.httpServer,
           'Listening on ' +
-          `[${httpServer.address().address}:${httpServer.address().port}]`
+          `[${serverData.httpServer.address().address}:` +
+          `${serverData.httpServer.address().port}]`
         )
         resolve()
       }
@@ -41,18 +43,25 @@ function httpServerListen(httpServer, port, host) {
   })
 }
 
-function createSetupIoServerFn(httpServer, event$, actions, logModule) {
+function createSetupIoServerFn(httpServer, interactions, log) {
   return function handleThenSetupIoServer() {
     const ioServer = SocketIo.listen(httpServer)
     ioServer.on(
       'connection',
-      socketConnectionFactory.create(event$, actions, logModule)
+      socketConnectionFactory.create(
+        interactions.events, interactions.actions, log
+      )
     )
   }
 }
 
 function create() {
-  const config = configFactory.create(log)
+  const log = logFactory.create()
+  const config = configFactory.create()
+  const httpServer = http.createServer()
+  const user = userFactory.create()
+  const events = eventsFactory.create([user.events.event$Collection])
+  const actions = actionsFactory.create(user.actions)
   logConsumerConsole.create(log, config.LOG_LEVELS, config.LOG_GROUPS)
   log.events.add(
     log.levels.info,
@@ -64,13 +73,11 @@ function create() {
   log.events.add(
     log.levels.info,
     log.groups.httpServer,
-    `Config loaded with values: \n` +
-    `CONFIG START\n${JSON.stringify(config, null, JSON_SPACING)}\nCONFIG END`
+    `Config loaded with keys: \n` +
+    `CONFIG START\n` +
+    `${JSON.stringify(Object.keys(config), null, JSON_SPACING)}` +
+    `\nCONFIG END`
   )
-  const httpServer = http.createServer()
-  const user = userFactory.create()
-  const events = eventsFactory.create([user.events.event$Collection])
-  const actions = actionsFactory.create(user.actions)
   events.event$.subscribe(function logEvent(eventData) {
     log.events.add(
       log.levels.info,
@@ -78,19 +85,25 @@ function create() {
       JSON.stringify(eventData, null, JSON_SPACING)
     )
   })
-  return httpServerListen(httpServer, config.PORT, config.HOST)
+  return httpServerListen({
+    httpServer,
+    port: config.PORT,
+    host: config.HOST
+  })
   .then(
     createSetupIoServerFn(
       httpServer,
-      events.event$,
-      actions,
+      {
+        events,
+        actions
+      },
        log
     )
   )
   .then(function handleThenReturnServerData() {
     return {
       httpServer,
-      close: closeFactory(httpServer),
+      close: closeFactory(httpServer, log),
       config
     }
   })

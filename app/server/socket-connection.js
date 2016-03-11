@@ -1,19 +1,20 @@
-function create(event$, log) {
+function create(actions, events, log) {
   return function handleConnect(socket) {
     log.events.add({
       level: log.levels.info,
       group: log.groups.wsServer,
       message: 'A client connected.'
     })
-    const event$Subscription = event$.subscribe(function handleSubscribe(val) {
-      socket.emit('event$', val)
+    const event$Subscription = events.event$.subscribe(
+      function handleSubscribe(val) {
+        socket.emit('event$', val)
+      }
+    )
+    socket.on('message', function handleMessage(clientEventData) {
+      /* eslint-disable max-len */
+      actions[clientEventData.header.namespace][clientEventData.header.eventName](clientEventData.body)
+      /* eslint-enable max-len */
     })
-
-    // TODO: Continue here. -MANI
-    // Setup a websocketstream that proxies client events to actions.
-    const clientevent$ = Rx.Observable.fromSocket(socket, 'clientEvent')
-    actionsFactory.create(clientEvent$)
-
     socket.on('disconnect', function handleDisconnect() {
       log.events.add({
         level: log.levels.info,

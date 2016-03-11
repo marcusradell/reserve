@@ -3,9 +3,7 @@
 function createLoginHandler(stateSubject) {
   return function handleLogin(loginData) {
     stateSubject.next(function handlenext(currentState) {
-      // TODO: Pure array push. -MANI
-      currentState.push(loginData)
-      return currentState
+      return [...currentState, loginData]
     })
   }
 }
@@ -13,13 +11,9 @@ function createLoginHandler(stateSubject) {
 function createRenameHandler(stateSubject) {
   return function handleRename(renameData) {
     stateSubject.next(function handlenext(currentState) {
-      const withoutOldNameState = currentState.filter(
-        function handleFilter(userData) {
-          return userData.name !== renameData.oldName
-        }
-      )
-      withoutOldNameState.push({name: renameData.newName})
-      return withoutOldNameState
+      currentState.find(function handleFind(userData) {
+        return userData.name === renameData.oldName
+      }).name = renameData.newName
     })
   }
 }
@@ -27,7 +21,6 @@ function createRenameHandler(stateSubject) {
 function createLogoutHandler(stateSubject) {
   return function handleLogout(logoutData) {
     stateSubject.next(function logoutEventHandler(currentState) {
-      // TODO: Make pure. -MANI
       return currentState.filter(function handleFilter(userData) {
         return userData.name !== logoutData.name
       })

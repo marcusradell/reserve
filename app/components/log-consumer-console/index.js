@@ -20,18 +20,16 @@ function create(log, levels, groups) {
       const message =
         `\n[${logData.level[FIRST_LETTER]}]` +
         `[${logData.group}]:` +
-        ` ${logData.message}`
-      /* eslint-disable no-console */
+        ` ${logData.message}\n`
       switch (logData.level) {
       case log.levels.info:
-        return console.info(message)
+        return process.stdout.write(message)
       case log.levels.warning:
-        return console.error(message)
+        return process.stderr.write(message)
       case log.levels.error:
-        return console.error(message)
+        return process.stderr.write(message)
       default:
-        return console.log(message)
-      /* eslint-enable no-console */
+        return process.stderr.write(message)
       }
     }
   })

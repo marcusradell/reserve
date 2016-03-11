@@ -1,3 +1,6 @@
+// TODO: Setup with a development.sh bash script that exports the defaults.
+// Maybe make the file optional somehow. -MANI
+
 /** @module config/development */
 
 /**

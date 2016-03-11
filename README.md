@@ -1,6 +1,7 @@
 # RxJS server
 A websocket server built around RxJS.
-The project goal is to make a proof of concept of a well-structured medium small project.
+The project goal is to make a proof of concept of a well-structured medium-sized micro services cluster.
+No frameworks were hurt nor installed during the making of this project.
 
 * Docker will be used to help with infrastructure.
 * AWS will be used as the cloud host.
@@ -49,17 +50,21 @@ Only use require on the top level of each module/component as to avoid side-effe
 
 Contain all dynamic code in factories/#create-functions so code can be unit tested in isolation.
 
+# Design patterns
+
+
 # Contributing
 First read the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # // TODO:
-* Complete the factory #create() pattern.
 * Complete jsdoc for stable parts.
 * Make a client.
-* Add a rabbitMQ or redis service.
-* Add a graph database (Neo4j).
-* Deploy to AWS ESC.
+* Move server app into a subfolder to make room for more sibling services.
+  * Add a rabbitMQ or redis service.
+  * Add a graph database (Neo4j).
+* Deploy to AWS ESC. Check if it suits with docker-machine deploy.
+  * Setup a swarm cluster. https://docs.docker.com/swarm/provision-with-machine/
 * Add free CI service.
   * Hook it up to github with tests and coverage report.
 * Add a github static project page.
@@ -70,3 +75,4 @@ Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
 * Add https wss support with openssl.
 * Get deepEquals assertion with strict equals. Node-tap seem to use == instead of ===.
 * Include a hash of the previous event data to secure badly inserted data.
+* Unsubscribe and dispose of assets.
