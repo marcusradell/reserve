@@ -8,19 +8,19 @@ unitTests.test('compose', function handleUnitTest(unitTest) {
 
   const event$A = new Rx.Subject()
   const event$B = new Rx.Subject()
-  const event$Collection = eventStreamComposer.create(
+  const events = eventStreamComposer.create(
     {
       event$A,
       event$B
     },
     'test'
   )
-  const eventASubscription = event$Collection
+  const eventASubscription = events.event$
   .subscribe(function handleSubscribe(event$Data) {
     eventASubscription.unsubscribe()
     const expected = {
       header: {
-        event$Name: 'event$A',
+        eventName: 'event$A',
         namespace: 'test'
       },
       body: {
@@ -32,12 +32,12 @@ unitTests.test('compose', function handleUnitTest(unitTest) {
   })
   event$A.next({stuff: 'thing'})
 
-  const eventBSubscription = event$Collection
+  const eventBSubscription = events.event$
   .subscribe(function handleSubscribe(event$Data) {
     eventBSubscription.unsubscribe()
     const expected = {
       header: {
-        event$Name: 'event$A',
+        eventName: 'event$A',
         namespace: 'test'
       },
       body: {
