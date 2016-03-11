@@ -1,6 +1,6 @@
 function create(Rx, event$Array) {
   return {
-    event$: Rx.merge(...event$Array)
+    event$: Rx.Observable.merge(...event$Array)
   }
 }
 

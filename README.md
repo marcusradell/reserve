@@ -76,3 +76,4 @@ Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
 * Get deepEquals assertion with strict equals. Node-tap seem to use == instead of ===.
 * Include a hash of the previous event data to secure badly inserted data.
 * Unsubscribe and dispose of assets.
+* Fix `./app/**/**/**/**/*.test.js` in test script. Nothing wrong with stars, but enough already!

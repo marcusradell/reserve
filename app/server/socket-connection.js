@@ -1,22 +1,22 @@
-function create(actions, events, log) {
+function create(interactions, log) {
   return function handleConnect(socket) {
-    log.events.add({
+    log.actions.add({
       level: log.levels.info,
       group: log.groups.wsServer,
       message: 'A client connected.'
     })
-    const event$Subscription = events.event$.subscribe(
+    const event$Subscription = interactions.events.event$.subscribe(
       function handleSubscribe(val) {
         socket.emit('event$', val)
       }
     )
-    socket.on('message', function handleMessage(clientEventData) {
+    socket.on('message', function handleMessage(data) {
       /* eslint-disable max-len */
-      actions[clientEventData.header.namespace][clientEventData.header.eventName](clientEventData.body)
+      interactions.actions[data.header.namespace][data.header.eventName](data.body)
       /* eslint-enable max-len */
     })
     socket.on('disconnect', function handleDisconnect() {
-      log.events.add({
+      log.actions.add({
         level: log.levels.info,
         group: log.groups.wsServer,
         message: 'A client disconnected.'

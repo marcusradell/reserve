@@ -6,7 +6,7 @@ const actionsFactory = require('./interactions/actions')
 
 function create() {
   const events = eventsFactory.create(Rx)
-  const actions = actionsFactory.create(Rx, events)
+  const actions = actionsFactory.create(events)
   return {
     events,
     actions,

@@ -6,11 +6,11 @@
   "scripts": {
     "start": "tap app/config/index.test.js && node app/index.js",
     "start:watch": "nodemon -x 'npm start'",
-    "test": "tap --reporter=classic -- ./app/**/**/**/*.test.js",
+    "test": "tap --reporter=classic -- ./app/**/**/**/**/*.test.js",
     "test:watch": "nodemon -x 'npm test'",
     "tw": "npm run test:watch",
     "test:cover": "tap ./app/**/**/*.test.js --reporter=classic --cov --coverage-report=lcov",
-    "test:unit:watch": "nodemon -x 'tap --reporter=classic -- ./app/server/index.test.js'",
+    "test:unit:watch": "nodemon -x 'tap --reporter=classic -- ./app/components/**/*.test.js'",
     "tuw": "npm run test:unit:watch",
     "lint": "eslint -c .eslintrc.js ./app",
     "docker:build": "docker build -t marcusnielsen/rxjs-server .",

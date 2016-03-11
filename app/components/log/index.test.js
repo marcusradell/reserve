@@ -1,8 +1,16 @@
 const tests = require('tap')
 const logFactory = require('./index')
 
-tests.test('log', function handleTests(test) {
+// TODO: Determine how to handle E2E tests differently than unit tests. -MANI
+tests.test('log E2E', function handleTests(test) {
   const log = logFactory.create()
+  const logObjectKeys = Object.keys(log)
+  const NUMBER_OF_OBJECT_KEYS = 4
+  test.strictEquals(
+    logObjectKeys.length,
+    NUMBER_OF_OBJECT_KEYS,
+    'should contain strictly 4 keys'
+  )
   const addSubscriber = log.events.add$
   .subscribe(function handleSubscribe(data) {
     addSubscriber.unsubscribe()

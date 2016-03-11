@@ -1,4 +1,4 @@
-function create(Rx, events) {
+function create(events) {
 
   function add(data) {
     events.add$.next({
