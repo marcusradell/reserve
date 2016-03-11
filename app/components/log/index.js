@@ -1,10 +1,20 @@
+const Rx = require('rxjs')
 const groups = require('./groups')
 const levels = require('./levels')
-const events = require('./events')
-// TODO: Decide how to handle the fake repository. -MANI
+const eventsFactory = require('./interactions/events')
+const actionsFactory = require('./interactions/actions')
+
+function create() {
+  const events = eventsFactory.create(Rx)
+  const actions = actionsFactory.create(Rx, events)
+  return {
+    events,
+    actions,
+    groups,
+    levels
+  }
+}
 
 module.exports = {
-  events,
-  groups,
-  levels
+  create
 }

@@ -14,7 +14,7 @@ unitTests.test('login', function handleUnitTest(unitTest) {
       unitTest.done()
     }
   )
-  user.actions.login('Marcus Nielsen')
+  user.actions.login({name: 'Marcus Nielsen'})
 })
 
 unitTests.test('rename', function handleUnitTest(unitTest) {
@@ -33,7 +33,7 @@ unitTests.test('rename', function handleUnitTest(unitTest) {
       unitTest.done()
     }
   )
-  user.actions.rename('Marcus Nielsen', 'Marcus Rådell')
+  user.actions.rename({oldName: 'Marcus Nielsen', newName: 'Marcus Rådell'})
 })
 
 unitTests.test('logout', function handleUnitTest(unitTest) {
@@ -49,5 +49,5 @@ unitTests.test('logout', function handleUnitTest(unitTest) {
       unitTest.done()
     }
   )
-  user.actions.logout('Marcus Rådell')
+  user.actions.logout({name: 'Marcus Rådell'})
 })

@@ -5,9 +5,8 @@ const userFactory = require('../components/user')
 const logConsumerConsole = require('../components/log-consumer-console')
 const socketConnectionFactory = require('./socket-connection')
 const configFactory = require('../config')
-const allEventStreamCollectionsFactory = require(
-  './all-event-stream-collections'
-)
+const eventsFactory = require('./interactions/events')
+const actionsFactory = require('./interactions/actions')
 
 function closeFactory(server) {
   return function close () {
@@ -42,10 +41,13 @@ function httpServerListen(httpServer, port, host) {
   })
 }
 
-function createSetupIoServerFn(httpServer, event$, logModule) {
+function createSetupIoServerFn(httpServer, event$, actions, logModule) {
   return function handleThenSetupIoServer() {
     const ioServer = SocketIo.listen(httpServer)
-    ioServer.on('connection', socketConnectionFactory.create(event$, logModule))
+    ioServer.on(
+      'connection',
+      socketConnectionFactory.create(event$, actions, logModule)
+    )
   }
 }
 
@@ -67,22 +69,21 @@ function create() {
   )
   const httpServer = http.createServer()
   const user = userFactory.create()
-  const event$ = allEventStreamCollectionsFactory.create(
-    [user.events.event$Collection]
-  )
-  event$.subscribe(function logEvent(eventData) {
+  const events = eventsFactory.create([user.events.event$Collection])
+  const actions = actionsFactory.create(user.actions)
+  events.event$.subscribe(function logEvent(eventData) {
     log.events.add(
       log.levels.info,
       log.groups.event,
       JSON.stringify(eventData, null, JSON_SPACING)
     )
   })
-  user.actions.login('Moa')
   return httpServerListen(httpServer, config.PORT, config.HOST)
   .then(
     createSetupIoServerFn(
       httpServer,
-      event$,
+      events.event$,
+      actions,
        log
     )
   )
