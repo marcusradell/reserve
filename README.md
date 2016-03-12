@@ -79,6 +79,7 @@ First read the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # // TODO:
+* Make issues for the todos.
 * Complete jsdoc for stable parts.
 * Make a client.
 * Move server app into a subfolder to make room for more sibling services.
