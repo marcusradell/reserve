@@ -1,4 +1,6 @@
 # RxJS server
+
+[![Join the chat at https://gitter.im/marcusnielsen/rxjs-server](https://badges.gitter.im/marcusnielsen/rxjs-server.svg)](https://gitter.im/marcusnielsen/rxjs-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/marcusnielsen/rxjs-server.svg?branch=master)](https://travis-ci.org/marcusnielsen/rxjs-server)
 [![Coverage Status](https://coveralls.io/repos/github/marcusnielsen/rxjs-server/badge.svg?branch=master)](https://coveralls.io/github/marcusnielsen/rxjs-server?branch=master)
 [![bitHound Overall Score](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/score.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
