@@ -1,7 +1,7 @@
 {
   "name": "rxjs-server",
   "version": "1.0.0",
-  "description": "An node http server wrapped with RxJS.",
+  "description": "A websocket server built around RxJS.",
   "main": "index.js",
   "scripts": {
     "start": "npm test && node app",
