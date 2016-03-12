@@ -67,8 +67,9 @@ Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
   * Add a graph database (Neo4j).
 * Deploy to AWS ESC. Check if it suits with docker-machine deploy.
   * Setup a swarm cluster. https://docs.docker.com/swarm/provision-with-machine/
-* Add free CI service.
+* Add free CI service. [DONE]
   * Hook it up to github with tests and coverage report.
+  * Activate Docker-compose workflow. https://docs.travis-ci.com/user/docker/
 * Add a github static project page.
 * Add CONTRIBUTORS.md .
 * Add CODE_OF_CONDUCT.md .
