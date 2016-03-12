@@ -1,6 +1,10 @@
 # RxJS server
 [![Build Status](https://travis-ci.org/marcusnielsen/rxjs-server.svg?branch=master)](https://travis-ci.org/marcusnielsen/rxjs-server)
 [![Coverage Status](https://coveralls.io/repos/github/marcusnielsen/rxjs-server/badge.svg?branch=master)](https://coveralls.io/github/marcusnielsen/rxjs-server?branch=master)
+[![bitHound Overall Score](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/score.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
+[![bitHound Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/dependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/devDependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/code.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
 
 A websocket server built around RxJS.
 The project goal is to make a proof of concept of a well-structured medium-sized micro services cluster.
