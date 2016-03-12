@@ -1,7 +1,6 @@
 # RxJS server
 [![Build Status](https://travis-ci.org/marcusnielsen/rxjs-server.svg?branch=master)](https://travis-ci.org/marcusnielsen/rxjs-server)
 [![Coverage Status](https://coveralls.io/repos/github/marcusnielsen/rxjs-server/badge.svg?branch=master)](https://coveralls.io/github/marcusnielsen/rxjs-server?branch=master)
-[![codecov.io](https://codecov.io/github/marcusnielsen/rxjs-server/coverage.svg?branch=master)](https://codecov.io/github/marcusnielsen/rxjs-server?branch=master)
 [![bitHound Overall Score](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/score.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
 [![bitHound Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/dependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/devDependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
