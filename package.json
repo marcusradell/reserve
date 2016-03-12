@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm test && node app",
+    "env": "./scripts/env.sh",
     "start:watch": "nodemon -x 'node app'",
     "test": "tap ./app/**/**/**/**/*.test.js --reporter=classic",
     "test:watch": "nodemon -x 'npm test'",

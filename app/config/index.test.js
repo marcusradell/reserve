@@ -1,4 +1,4 @@
-const configFactory = require('../config')
+const configFactory = require('./index')
 const rootTest = require('tap').test
 
 /* eslint-disable max-statements */
