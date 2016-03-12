@@ -16,9 +16,11 @@ function create(log, levels, groups) {
   })
   .map(function functionName(logData) {
     return function produceLog() {
-      const FIRST_LETTER = 0
+      // TODO: Fix so it works with Travis CI. -MANI
+      // const FIRST_LETTER = 0
       const message =
-        `\n[${logData.level[FIRST_LETTER]}]` +
+        // `\n[${logData.level[FIRST_LETTER]}]` +
+        `\n[${logData.level}]` +
         `[${logData.group}]:` +
         ` ${logData.message}\n`
       switch (logData.level) {

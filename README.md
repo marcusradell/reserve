@@ -1,4 +1,6 @@
 # RxJS server
+[![Build Status](https://travis-ci.org/marcusnielsen/rxjs-server.svg?branch=master)](https://travis-ci.org/marcusnielsen/rxjs-server)
+
 A websocket server built around RxJS.
 The project goal is to make a proof of concept of a well-structured medium-sized micro services cluster.
 No frameworks were hurt nor installed during the making of this project.
