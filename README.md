@@ -53,7 +53,21 @@ Only use require on the top level of each module/component as to avoid side-effe
 Contain all dynamic code in factories/#create-functions so code can be unit tested in isolation.
 
 # Design patterns
+All components will export a `create` factory function. This makes testing easier and lessens the side effects of node modules being singletons.
 
+Only the root level files (usually `index.js`) `require` modules. Child modules get them sent in as arguments to the `create` factory function.
+
+Functions that depend on variables in the parent scope should also use a `create` factory function by creating an isolated parent scope.
+This makes it easier to reason about what variables are accessed in the parent scope.
+
+# Influences
+* Cycle.js with great docs and heavy usage of RxJS is the main source of inspiration.
+* Interactions (actions and events) comes from the MVI-pattern Intent part as seen in cycle.js docs.
+* Repositories were inspired by Redux, but named after a Microsoft pattern.
+* The dependency injection were inspired by angular and Microsoft, although it's not the DI pattern but just simple argument passing.
+* File structure were inspired by google's suggestion on AngularJS 1.x file structure.
+* Testing tools were inspired by Eric Elliot's blogs.
+* Config solution was inspired by the npm package dotenv.
 
 # Contributing
 First read the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
