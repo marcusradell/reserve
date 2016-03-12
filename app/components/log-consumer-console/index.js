@@ -1,16 +1,17 @@
+// TODO: Write tests! Failed on Travis CI. -MANI
 const INDEX_OF_NOT_FOUND = -1
 
-function create(log, levels, groups) {
+function create(log, levelsFilter, groupsFilter) {
   log.events.add$
   .filter(function handleLevelsFilter(logData) {
-    return !levels ||
-    levels
+    return !levelsFilter ||
+    levelsFilter
     .split(',')
     .indexOf(logData.level) !== INDEX_OF_NOT_FOUND
   })
   .filter(function handleGroupsFilter(logData) {
-    return !groups ||
-      groups
+    return !groupsFilter ||
+      groupsFilter
       .split(',')
       .indexOf(logData.group) !== INDEX_OF_NOT_FOUND
   })
