@@ -1,17 +1,17 @@
-// TODO: Write tests! Failed on Travis CI. -MANI
 const INDEX_OF_NOT_FOUND = -1
+const defaultWriteStreamsFactory = require('./write-streams')
 
-function create(log, levelsFilter, groupsFilter) {
-  log.events.add$
+function create(log, writeStreams, options) {
+  return log.events.add$
   .filter(function handleLevelsFilter(logData) {
-    return !levelsFilter ||
-    levelsFilter
+    return !options.levelsFilter ||
+    options.levelsFilter
     .split(',')
     .indexOf(logData.level) !== INDEX_OF_NOT_FOUND
   })
   .filter(function handleGroupsFilter(logData) {
-    return !groupsFilter ||
-      groupsFilter
+    return !options.groupsFilter ||
+      options.groupsFilter
       .split(',')
       .indexOf(logData.group) !== INDEX_OF_NOT_FOUND
   })
@@ -24,13 +24,13 @@ function create(log, levelsFilter, groupsFilter) {
         ` ${logData.message}\n`
       switch (logData.level) {
       case log.levels.info:
-        return process.stdout.write(message)
+        return writeStreams.out.write(message)
       case log.levels.warning:
-        return process.stderr.write(message)
+        return writeStreams.err.write(message)
       case log.levels.error:
-        return process.stderr.write(message)
+        return writeStreams.err.write(message)
       default:
-        return process.stderr.write(message)
+        return writeStreams.err.write(message)
       }
     }
   })
@@ -40,5 +40,6 @@ function create(log, levelsFilter, groupsFilter) {
 }
 
 module.exports = {
-  create
+  create,
+  writeStreamsFactory: defaultWriteStreamsFactory
 }
