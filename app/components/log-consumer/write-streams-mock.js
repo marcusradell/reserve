@@ -5,15 +5,15 @@ function create(callBack) {
   function writeOut(message) {
     callBack(message)
   }
-  function writeErr(message) {
+  function writeError(message) {
     callBack(message)
   }
   return {
     out: {
       write: writeOut
     },
-    err: {
-      write: writeErr
+    error: {
+      write: writeError
     }
   }
 }

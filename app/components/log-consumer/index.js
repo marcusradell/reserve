@@ -26,11 +26,11 @@ function create(log, writeStreams, options) {
       case log.levels.info:
         return writeStreams.out.write(message)
       case log.levels.warning:
-        return writeStreams.err.write(message)
+        return writeStreams.error.write(message)
       case log.levels.error:
-        return writeStreams.err.write(message)
+        return writeStreams.error.write(message)
       default:
-        return writeStreams.err.write(message)
+        return writeStreams.error.write(message)
       }
     }
   })
