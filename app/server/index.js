@@ -7,6 +7,9 @@ const logConsumerFactory = require('../components/log-consumer')
 const socketConnectionFactory = require('./socket-connection')
 const configFactory = require('../config')
 const eventsFactory = require('./interactions/events')
+const writeStreamsSentryFactory = require(
+  '../components/log-consumer/write-streams-sentry'
+)
 
 function closeFactory(server, log) {
   return function close () {
@@ -73,6 +76,16 @@ function create() {
       groupsFilter: config.LOG_GROUPS
     }
   )
+  if (config.SENTRY) {
+    logConsumerFactory.create(
+      log,
+      writeStreamsSentryFactory.create(config.SENTRY),
+      {
+        levelsFilter: log.levels.error,
+        groupsFilter: null
+      }
+    )
+  }
   log.actions.add({
     level: log.levels.info,
     group: log.groups.httpServer,

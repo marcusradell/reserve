@@ -1,3 +1,5 @@
+// TODO: Redo log actions to have an action per level and remove levels.js. -MANI
+
 const Rx = require('rxjs')
 const groups = require('./groups')
 const levels = require('./levels')

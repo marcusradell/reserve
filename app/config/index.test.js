@@ -37,11 +37,26 @@ rootTest('config', function onConfigTest(test) {
     true,
     'should have config variable LOG_GROUPS'
   )
-  const EXPECTED_CONFIG_LENGTH = 4
+  test.strictEquals(
+    configKeys.indexOf('SENTRY') !== INDEX_OF_NOT_FOUND,
+    true,
+    'should have config variable SENTRY'
+  )
+  test.strictEquals(
+    configKeys.indexOf('SENDGRID') !== INDEX_OF_NOT_FOUND,
+    true,
+    'should have config variable SENDGRID'
+  )
+  test.strictEquals(
+    configKeys.indexOf('AUTHY') !== INDEX_OF_NOT_FOUND,
+    true,
+    'should have config variable AUTHY'
+  )
+  const EXPECTED_CONFIG_LENGTH = 7
   test.strictEquals(
     configKeys.length,
     EXPECTED_CONFIG_LENGTH,
-    'should have 5 config variables'
+    'should have the right number of config variables'
   )
   test.done()
 })
