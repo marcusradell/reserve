@@ -15,6 +15,15 @@ unitTests.test('server', function handleUnitTest(unitTest) {
     const socket = ioClient(socketURL, ioOptions)
     socket.on('connect', function handleConnect() {
       unitTest.pass('should connect a client.')
+      socket.emit('message', {
+        header: {
+          namespace: 'chat',
+          action: 'write'
+        },
+        body: {
+          val: 'text'
+        }
+      })
       socket.disconnect()
     })
     socket.on('error', function handleData(err) {
