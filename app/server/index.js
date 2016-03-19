@@ -3,6 +3,7 @@ const SocketIo = require('socket.io')
 const Rx = require('rxjs')
 const logFactory = require('../components/log')
 const userFactory = require('../components/user')
+const chatFactory = require('../components/chat')
 const logConsumerFactory = require('../components/log-consumer')
 const socketConnectionFactory = require('./socket-connection')
 const configFactory = require('../config')
@@ -61,13 +62,20 @@ function create() {
   const log = logFactory.create()
   const config = configFactory.create()
   const httpServer = http.createServer()
-  const user = userFactory.create()
-  // TODO: Compose more components' actions. -MANI
+  // TODO: Reduce code duplications.
+  const user = userFactory.create('user')
+  const chat = chatFactory.create('chat')
   const actions = {
-    user: user.actions
+    user: user.actions,
+    chat: chat.actions
   }
-  // TODO: Compose more components' events. MANI
-  const events = eventsFactory.create(Rx, [user.events.event$])
+  const events = eventsFactory.create(
+    Rx,
+    [
+      user.events.event$,
+      chat.events.event$
+    ]
+  )
   logConsumerFactory.create(
     log,
     logConsumerFactory.writeStreamsFactory.create(),

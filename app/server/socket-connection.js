@@ -12,7 +12,7 @@ function create(interactions, log) {
     )
     socket.on('message', function handleMessage(data) {
       /* eslint-disable max-len */
-      interactions.actions[data.header.namespace][data.header.eventName](data.body)
+      interactions.actions[data.header.namespace][data.header.action](data.body)
       /* eslint-enable max-len */
     })
     socket.on('disconnect', function handleDisconnect() {
