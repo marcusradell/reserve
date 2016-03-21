@@ -52,7 +52,7 @@ rootTest('config', function onConfigTest(test) {
     true,
     'should have config variable AUTHY'
   )
-  const EXPECTED_CONFIG_LENGTH = 7
+  const EXPECTED_CONFIG_LENGTH = 9
   test.strictEquals(
     configKeys.length,
     EXPECTED_CONFIG_LENGTH,

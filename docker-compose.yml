@@ -1,8 +1,18 @@
 version: '2'
 services:
-  web:
-    build: .
-    command: npm start
+  web-application:
+    build: ./web-application
+    volumes:
+    - "./web-application:/home/app/src"
     ports:
-      - "3000:8080"
-    env_file: ./.docker-env
+      - "3000:3000"
+    links:
+      - rethinkdb
+    env_file: ./web-application/.docker-env
+    command: echo 'ready'
+  rethinkdb:
+    image: rethinkdb
+    ports:
+        - "8080:8080"
+        - "28015:28015"
+        - "29015:29015"
