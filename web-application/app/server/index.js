@@ -62,13 +62,13 @@ function create() {
   const log = logFactory.create()
   const config = configFactory.create()
   const httpServer = http.createServer()
-  // TODO: Reduce code duplications.
-  const user = userFactory.create('user')
-  const chat = chatFactory.create('chat')
-  const actions = {
-    user: user.actions,
-    chat: chat.actions
-  }
+  const userNamespace = 'user'
+  const chatNamespace = 'chat'
+  const user = userFactory.create(userNamespace)
+  const chat = chatFactory.create(chatNamespace)
+  const actions = {}
+  actions[userNamespace] = user.actions
+  actions[chatNamespace] = chat.actions
   const events = eventsFactory.create(
     Rx,
     [
