@@ -1,0 +1,3 @@
+[submodule "rxjs-server-client"]
+	path = rxjs-server-client
+	url = git@github.com:marcusnielsen/rxjs-server-client.git
