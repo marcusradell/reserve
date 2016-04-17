@@ -8,13 +8,13 @@ import stateFactory from './state'
 function create() {
   const events = eventsFactory.create(Rx)
   const actions = actionsFactory.create(events)
+  const renderer = rendererFactory.create(React, actions)
   const state = stateFactory.create(Rx, events)
-  const renderer = rendererFactory.create(React)
   return {
-    events,
     actions,
-    state,
-    renderer
+    events,
+    renderer,
+    state
   }
 }
 

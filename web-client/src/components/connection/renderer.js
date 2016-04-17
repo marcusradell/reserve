@@ -1,6 +1,4 @@
-import React from 'react'
-
-function create() {
+function create(React) {
   function render({state}) {
     return (
       <div>
