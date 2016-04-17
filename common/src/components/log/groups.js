@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   httpServer: 'http-server',
   wsServer: 'ws-server',
   rxjs: 'rxjs',

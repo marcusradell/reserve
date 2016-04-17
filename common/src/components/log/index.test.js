@@ -1,3 +1,4 @@
+// TODO: redo in ES6. -MANI
 const tests = require('tap')
 const logFactory = require('./index')
 

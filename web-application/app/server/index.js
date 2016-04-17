@@ -1,16 +1,18 @@
 const http = require('http')
 const SocketIo = require('socket.io')
 const Rx = require('rxjs')
-const logFactory = require('../components/log')
-const userFactory = require('../components/user')
-const chatFactory = require('../components/chat')
-const logConsumerFactory = require('../components/log-consumer')
+const logFactory = require('rsrv-common/lib/components/log').default
+const userFactory = require('rsrv-common/lib/components/user').default
+const chatFactory = require('rsrv-common/lib/components/chat').default
+const logConsumerFactory = require(
+  'rsrv-common/lib/components/log-consumer'
+  ).default
 const socketConnectionFactory = require('./socket-connection')
 const configFactory = require('../config')
 const eventsFactory = require('./interactions/events')
 const writeStreamsSentryFactory = require(
-  '../components/log-consumer/write-streams-sentry'
-)
+  'rsrv-common/lib/components/log-consumer/write-streams-sentry'
+).default
 
 function closeFactory(server, log) {
   return function close () {
