@@ -6,9 +6,12 @@ function create(io, events, connectionActions) {
   socket.on('disconnect', function onDisconnect() {
     connectionActions.disconnect()
   })
-  events.event$.subscribe(function onEvent(data) {
+  socket.on('server-event', function onServerEvent(data) {
     debugger;
-    socket.emit('message', data)
+    // TODO: fire off action. -MANI
+  })
+  events.event$.subscribe(function onEvent(data) {
+    socket.emit('client-event', data)
   })
 }
 

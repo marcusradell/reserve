@@ -9,10 +9,10 @@ function create(interactions, log) {
     })
     const event$Subscription = interactions.events.event$.subscribe(
       function handleSubscribe(val) {
-        socket.emit('event$', val)
+        socket.emit('server-event', val)
       }
     )
-    socket.on('message', function handleMessage(data) {
+    socket.on('client-event', function handleMessage(data) {
       try {
         const actionName = data.header.eventName.slice(startIndex, lastIndex)
         /* eslint-disable max-len */
@@ -22,7 +22,6 @@ function create(interactions, log) {
         log.actions.add({
           level: log.levels.error,
           group: log.groups.wsServer,
-          // TODO: Fix ESLint. -MANI
           message: `${error}
           data.header.namespace: ${data.header.namespace}
           data.header.eventName: ${data.header.eventName}
