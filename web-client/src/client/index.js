@@ -3,6 +3,7 @@ import ReactDom from 'react-dom'
 import Rx from 'rxjs'
 import chatFactory from '../components/chat'
 import connectionFactory from '../components/connection'
+import eventsFactory from './events'
 import io from 'socket.io-client'
 import rendererFactory from './renderer'
 import socketFactory from './socket'
@@ -10,8 +11,14 @@ import stateFactory from './state'
 
 function create() {
   const connection = connectionFactory.create()
-  const chat = chatFactory.create()
-  socketFactory.create(io, connection.actions)
+  const chat = chatFactory.create('chat')
+  const events = eventsFactory.create(
+    Rx,
+    [
+      chat.events.event$
+    ]
+  )
+  socketFactory.create(io, events, connection.actions)
   const state$ = stateFactory.create(
     Rx,
     connection.state.state$,
@@ -21,10 +28,9 @@ function create() {
     ConnectionElement: connection.renderer.render,
     ChatElement: chat.renderer.render
   }
-  const renderer = rendererFactory.create(
+  rendererFactory.create(
     React, ReactDom, state$, elements
   )
-  renderer.initialize()
 }
 
 export default {

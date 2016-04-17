@@ -1,10 +1,13 @@
-function create(Rx, inputEvents) {
+function create(Rx, eventsComposer, namespace, inputEvents) {
   const write$ = new Rx.Subject()
 
-  return {
-    write$,
-    setValue$: inputEvents.setValue$
-  }
+  return eventsComposer.create(
+    {
+      write$,
+      setValue$: inputEvents.setValue$
+    },
+    namespace
+  )
 }
 
 export default {
