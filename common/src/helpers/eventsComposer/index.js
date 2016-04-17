@@ -1,4 +1,3 @@
-// TODO: Remove duplicate code (original in backend). -MANI
 import Rx from 'rxjs'
 
 function create(events, namespace) {
