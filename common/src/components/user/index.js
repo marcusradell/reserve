@@ -1,11 +1,11 @@
-const Rx = require('rxjs')
-const eventStreamComposer = require('../../helpers/eventsComposer')
-const eventsFactory = require('./interactions/events')
-const actionsFactory = require('./interactions/actions')
-const repositoryFactory = require('./repository')
+import Rx from 'rxjs'
+import actionsFactory from './interactions/actions'
+import eventsComposer from '../../helpers/eventsComposer'
+import eventsFactory from './interactions/events'
+import repositoryFactory from './repository'
 
 function create(namespace) {
-  const events = eventsFactory.create(Rx, eventStreamComposer, namespace)
+  const events = eventsFactory.create(Rx, eventsComposer, namespace)
   const actions = actionsFactory.create(events)
   const repository = repositoryFactory.create(Rx, events)
 
@@ -16,6 +16,6 @@ function create(namespace) {
   }
 }
 
-module.exports = {
+export default {
   create
 }
