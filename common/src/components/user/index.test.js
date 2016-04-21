@@ -1,7 +1,7 @@
-const unitTests = require('tap')
+const unitTests = require('ava')
 const userFactory = require('../user')
 
-unitTests.test('login', function handleUnitTest(unitTest) {
+unitTests('login', function handleUnitTest(unitTest) {
   const user = userFactory.create()
   const subscription = user.events.login$.subscribe(
     function handleStateSubscribe(loginData) {

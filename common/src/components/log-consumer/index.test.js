@@ -1,9 +1,9 @@
-const tests = require('tap')
-const logFactory = require('../log')
-const logConsumerFactory = require('./index')
-const writeStreamsMockFactory = require('./write-streams-mock')
+import logConsumerFactory from './index'
+import logFactory from '../log'
+import tests from 'ava'
+import writeStreamsMockFactory from './write-streams-mock'
 
-tests.test('log-consumer-console', function handleTest(test) {
+tests('log-consumer', function handleTest(test) {
   const log = logFactory.create()
   const subscriptionProxy = {}
   const writeStreamsMock = writeStreamsMockFactory.create(
@@ -23,8 +23,7 @@ tests.test('log-consumer-console', function handleTest(test) {
     writeStreamsMock,
     {}
   )
-  log.actions.add({
-    level: log.levels.error,
+  log.actions.error({
     group: log.groups.event,
     message: 'test'
   })

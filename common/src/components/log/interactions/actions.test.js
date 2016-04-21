@@ -1,10 +1,10 @@
 // TODO: redo in ES6. -MANI
-const tests = require('tap')
+const tests = require('ava')
 const Rx = require('rxjs')
 const eventsFactory = require('./events')
 const actionsFactory = require('./actions')
 
-tests.test('actions', function handleTests(test) {
+tests('actions', function handleTests(test) {
   const events = eventsFactory.create(Rx)
   events.add$.subscribe(function handleSubscribe(addData) {
     test.deepEquals(

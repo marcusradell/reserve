@@ -1,7 +1,6 @@
 const rootTest = require('tap')
 const Rx = require('rxjs')
 const handleConnectFactory = require('./socket-connection')
-// TODO: mock logFactory. -MANI
 const logFactory = require('rsrv-common/lib/components/log').default
 
 rootTest.test('handle-connect', function handleRootTest(unitTests) {

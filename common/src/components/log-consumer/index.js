@@ -1,8 +1,14 @@
+import Rx from 'rxjs'
+import defaultWriteStreamsFactory from './write-streams'
+
 const INDEX_OF_NOT_FOUND = -1
-const defaultWriteStreamsFactory = require('./write-streams')
 
 function create(log, writeStreams, options) {
-  return log.events.add$
+  return Rx.Observable.merge(
+    log.events.info$,
+    log.events.warning$,
+    log.events.error$
+  )
   .filter(function handleLevelsFilter(logData) {
     return !options.levelsFilter ||
     options.levelsFilter
@@ -22,6 +28,7 @@ function create(log, writeStreams, options) {
         `\n[${logData.level[FIRST_LETTER]}]` +
         `[${logData.group}]:` +
         ` ${logData.message}\n`
+      // TODO: Redo for each stream (info$, warning$, error$). -MANI
       switch (logData.level) {
       case log.levels.info:
         return writeStreams.out.write(message)
@@ -39,7 +46,7 @@ function create(log, writeStreams, options) {
   })
 }
 
-module.exports = {
+export default {
   create,
   writeStreamsFactory: defaultWriteStreamsFactory
 }

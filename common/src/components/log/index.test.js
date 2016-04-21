@@ -1,9 +1,9 @@
 // TODO: redo in ES6. -MANI
-const tests = require('tap')
+const tests = require('ava')
 const logFactory = require('./index')
 
 // TODO: Determine how to handle E2E tests differently than unit tests. -MANI
-tests.test('log E2E', function handleTests(test) {
+tests('log E2E', function handleTests(test) {
   const log = logFactory.create()
   const logObjectKeys = Object.keys(log)
   const NUMBER_OF_OBJECT_KEYS = 4
