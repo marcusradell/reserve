@@ -1,22 +1,25 @@
-const raven = require('raven');
+import raven from 'raven'
 
 function create(ravenConnectionString) {
   const client = new raven.Client(ravenConnectionString);
   // TODO: Make an unpatcher wrapped in a return destroy function. -MANI
   client.patchGlobal();
-  function write(message) {
-    client.captureException(new Error(message))
+
+  function info() {}
+
+  function warning() {}
+
+  function error(err) {
+    client.captureException(err)
   }
+
   return {
-    out: {
-      write
-    },
-    error: {
-      write
-    }
+    info,
+    warning,
+    error
   }
 }
 
-module.exports = {
+export default {
   create
 }

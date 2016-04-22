@@ -1,3 +1,9 @@
+// TODO: Rename to something better. -MANI
+
+// This helper merges an object of streams
+// and maps the data into a serializable format that the client and server
+// can use to route the event to an action.
+
 import Rx from 'rxjs'
 
 function create(events, namespace) {

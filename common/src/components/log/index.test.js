@@ -9,14 +9,14 @@ tests.cb('log', function handleTests(test) {
     test.deepEqual(
       data,
       {
-        level: 'error',
         group: 'event',
         message: 'test'
-      },
-    'should get logged message.')
+      }
+    )
     test.end()
   })
   log.actions.error({
     group: log.groups.event,
-    message: 'test'})
+    message: 'test'
+  })
 })

@@ -4,11 +4,10 @@ import actionsFactory from './interactions/actions'
 import eventStreamComposer from '../../helpers/eventsComposer'
 import eventsFactory from './interactions/events'
 import groups from './groups'
-import levels from './levels'
 
 function create(namespace) {
   const events = eventsFactory.create(Rx, eventStreamComposer, namespace)
-  const actions = actionsFactory.create(events, levels)
+  const actions = actionsFactory.create(events)
   return {
     events,
     actions,
