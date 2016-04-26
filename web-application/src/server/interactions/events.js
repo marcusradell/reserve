@@ -4,6 +4,6 @@ function create(Rx, event$Array) {
   }
 }
 
-module.exports = {
+export default {
   create
 }

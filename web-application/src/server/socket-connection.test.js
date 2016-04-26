@@ -1,9 +1,9 @@
-const rootTest = require('tap')
+const tests = require('ava')
 const Rx = require('rxjs')
 const handleConnectFactory = require('./socket-connection')
 const logFactory = require('reserve-common/lib/components/log').default
 
-rootTest.test('handle-connect', function handleRootTest(unitTests) {
+tests.cb('handle-connect', function handleRootTest(unitTests) {
   const mockedEvent$ = new Rx.Subject()
   function mockedAction(data) {
     mockedEvent$.next(data)
@@ -12,7 +12,7 @@ rootTest.test('handle-connect', function handleRootTest(unitTests) {
     events: {event$: mockedEvent$},
     actions: {mockedAction}
   }
-  unitTests.test('create', function handleUnitTest(unitTest) {
+  unitTests.cb('create', function handleUnitTest(unitTest) {
     const log = logFactory.create()
     const handleConnect = handleConnectFactory.create(mockedInteractions, log)
     unitTest.strictEquals(
@@ -20,9 +20,10 @@ rootTest.test('handle-connect', function handleRootTest(unitTests) {
       'function',
       'should return a function'
     )
-    unitTest.done()
+    unitTest.end()
   })
 
+  unitTests.end()
   // TODO: mockedSocket.on is called with 'message' and 'disconnect.'
   // Fix tests. -MANI
   // unitTests.test('handleConnect', function handleUnitTest(unitTest) {
@@ -60,5 +61,4 @@ rootTest.test('handle-connect', function handleRootTest(unitTests) {
   //   handleConnect(mockedSocket)
   //   mockedEvent$.next('hello')
   // })
-  unitTests.done()
 })

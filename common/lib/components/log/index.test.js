@@ -1,26 +1,27 @@
 'use strict';
 
-// TODO: redo in ES6. -MANI
-var tests = require('tap');
-var logFactory = require('./index');
+var _index = require('./index');
 
-// TODO: Determine how to handle E2E tests differently than unit tests. -MANI
-tests.test('log E2E', function handleTests(test) {
-  var log = logFactory.create();
-  var logObjectKeys = Object.keys(log);
-  var NUMBER_OF_OBJECT_KEYS = 4;
-  test.strictEquals(logObjectKeys.length, NUMBER_OF_OBJECT_KEYS, 'should contain strictly 4 keys');
-  var addSubscriber = log.events.add$.subscribe(function handleSubscribe(data) {
+var _index2 = _interopRequireDefault(_index);
+
+var _ava = require('ava');
+
+var _ava2 = _interopRequireDefault(_ava);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_ava2.default.cb('log', function handleTests(test) {
+  var log = _index2.default.create();
+  var addSubscriber = log.events.error$.subscribe(function handleSubscribe(data) {
     addSubscriber.unsubscribe();
-    test.deepEquals(data, {
-      level: 'error',
+    test.deepEqual(data, {
       group: 'event',
       message: 'test'
-    }, 'should get logged message.');
-    test.done();
+    });
+    test.end();
   });
-  log.actions.add({
-    level: log.levels.error,
+  log.actions.error({
     group: log.groups.event,
-    message: 'test' });
+    message: 'test'
+  });
 });

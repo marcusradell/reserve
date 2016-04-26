@@ -1,10 +1,10 @@
 'use strict';
 
-var unitTests = require('tap');
+var unitTests = require('ava');
 var Rx = require('rxjs');
 var eventStreamComposer = require('./index');
 
-unitTests.test('compose', function handleUnitTest(unitTest) {
+unitTests('compose', function handleUnitTest(unitTest) {
   var NUMBER_OF_TESTS = 2;
   unitTest.plan(NUMBER_OF_TESTS);
 

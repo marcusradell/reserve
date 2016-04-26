@@ -42,6 +42,6 @@ function create(interactions, log) {
   }
 }
 
-module.exports = {
+export default {
   create
 }

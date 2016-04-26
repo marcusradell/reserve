@@ -1,6 +1,6 @@
 /** @module config */
 
-const environmentConfigFactory = require('./environment')
+import environmentConfigFactory from './environment'
 
 /**
 Use this prefix for all environment variables.
@@ -21,7 +21,7 @@ function create() {
   return Object.assign({}, environmentConfig)
 }
 
-module.exports = {
+export default {
   create,
   PREFIX
 }

@@ -3,10 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-function create(events, levels) {
+function create(events) {
   function info(data) {
     events.info$.next({
-      level: levels.info,
       group: data.group,
       message: data.message
     });
@@ -14,7 +13,6 @@ function create(events, levels) {
 
   function warning(data) {
     events.warning$.next({
-      level: levels.warning,
       group: data.group,
       message: data.message
     });
@@ -22,7 +20,6 @@ function create(events, levels) {
 
   function error(data) {
     events.error$.next({
-      level: levels.error,
       group: data.group,
       message: data.message
     });

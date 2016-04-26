@@ -1,19 +1,17 @@
-// TODO: Make whole project ES6 style or node v6 if it supports modules. -MANI
-const http = require('http')
-const SocketIo = require('socket.io')
-const Rx = require('rxjs')
-const logFactory = require('reserve-common/lib/components/log').default
-const userFactory = require('reserve-common/lib/components/user').default
-const chatFactory = require('reserve-common/lib/components/chat').default
-const logConsumerFactory = require(
-  'reserve-common/lib/components/log-consumer'
-  ).default
-const socketConnectionFactory = require('./socket-connection')
-const configFactory = require('../config')
-const eventsFactory = require('./interactions/events')
-const writeStreamsSentryFactory = require(
-  'reserve-common/lib/components/log-consumer/write-streams-sentry'
-).default
+import Rx from 'rxjs'
+import SocketIo from 'socket.io'
+import chatFactory from 'reserve-common/lib/components/chat'
+import configFactory from '../config'
+import eventsFactory from './interactions/events'
+import http from 'http'
+import logConsumerFactory from 'reserve-common/lib/components/log-consumer'
+import logFactory from 'reserve-common/lib/components/log'
+import sentryWritersFactory from
+  'reserve-common/lib/components/log-consumer/writers/sentry-writers'
+import socketConnectionFactory from './socket-connection'
+import stdWritersFactory from
+  'reserve-common/lib/components/log-consumer/writers/sentry-writers'
+import userFactory from 'reserve-common/lib/components/user'
 
 function closeFactory(server, log) {
   return function close () {
@@ -81,31 +79,27 @@ function create() {
   )
   logConsumerFactory.create(
     log,
-    logConsumerFactory.writeStreamsFactory.create(),
+    stdWritersFactory.create(),
     {
-      levelsFilter: config.LOG_LEVELS,
       groupsFilter: config.LOG_GROUPS
     }
   )
   if (config.SENTRY) {
     logConsumerFactory.create(
       log,
-      writeStreamsSentryFactory.create(config.SENTRY),
+      sentryWritersFactory.create(config.SENTRY),
       {
-        levelsFilter: log.levels.error,
         groupsFilter: null
       }
     )
   }
-  log.actions.add({
-    level: log.levels.info,
+  log.actions.info({
     group: log.groups.httpServer,
     message: `Server starting with NODE_ENV: [${process.env.NODE_ENV}]`
   })
   // TODO: Obfuscate values before logging. -MANI
   const JSON_SPACING = 2
-  log.actions.add({
-    level: log.levels.info,
+  log.actions.info({
     group: log.groups.httpServer,
     message: `Config loaded with keys: \n` +
     `CONFIG START\n` +
@@ -113,8 +107,7 @@ function create() {
     `\nCONFIG END`
   })
   events.event$.subscribe(function logEvent(eventData) {
-    log.actions.add({
-      level: log.levels.info,
+    log.actions.info({
       group: log.groups.event,
       message: JSON.stringify(eventData, null, JSON_SPACING)
     })
@@ -147,6 +140,6 @@ function create() {
 }
 /* eslint-enable max-statements */
 
-module.exports = {
+export default {
   create
 }

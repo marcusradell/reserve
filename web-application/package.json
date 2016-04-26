@@ -2,21 +2,25 @@
   "name": "rxjs-server",
   "version": "1.0.0",
   "description": "A websocket server built around RxJS.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "npm test && node app",
-    "env": "./scripts/env.sh",
-    "start:watch": "nodemon -x 'node app'",
-    "test": "tap ./app/**/**/**/**/*.test.js --reporter=classic",
-    "test:watch": "nodemon --legacy-watch -x 'npm test'",
-    "tw": "npm run test:watch",
-    "test:cover": "tap ./app/**/**/**/**/*.test.js --reporter=classic --cov --coverage-report=lcov",
-    "test:unit:watch": "nodemon -x 'tap ./app/server/index.test.js --reporter=classic'",
-    "tuw": "npm run test:unit:watch",
-    "lint": "eslint -c .eslintrc.js ./app",
-    "docker:run": "docker-compose run --rm web-application /bin/bash",
-    "jsdoc": "jsdoc -d ./jsdoc/ -r -c jsdoc.config.json -P ./package.json",
-    "watch:jsdoc": "nodemon -x 'npm run jsdoc' --ignore 'jsdoc/*.js' --ignore 'app/**/*.test.js'"
+    "build:clean": "rm -rf lib && mkdir lib",
+    "prebuild": "npm run build:clean",
+    "build": "babel src --out-dir lib",
+    "start": "npm test && node lib",
+    "test": "ava",
+    "test:watch": "ava --watch",
+    "lint": "eslint -c .eslintrc.js ./src",
+    "docker:run": "docker-compose run --rm web-application /bin/bash"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit",
+    "source": "src/**/*.js",
+    "failFast": true,
+    "files": "src/**/*.test.js"
   },
   "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
   "repository": {
@@ -25,17 +29,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "reserve-common": "file:../common",
+    "ava": "^0.14.0",
     "raven": "^0.10.0",
+    "reserve-common": "file:../common",
     "rethinkdb": "^2.2.2",
     "rxjs": "^5.0.0-beta.2",
     "socket.io": "^1.4.5",
-    "socket.io-client": "^1.4.5",
-    "tap": "^5.7.0"
+    "socket.io-client": "^1.4.5"
   },
   "devDependencies": {
     "eslint": "^2.0.0",
-    "jsdoc": "^3.4.0",
     "nodemon": "^1.9.1"
   }
 }

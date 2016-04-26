@@ -1,34 +1,43 @@
 'use strict';
 
-var INDEX_OF_NOT_FOUND = -1;
-var defaultWriteStreamsFactory = require('./write-streams');
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-function create(log, writeStreams, options) {
-  return log.events.add$.filter(function handleLevelsFilter(logData) {
-    return !options.levelsFilter || options.levelsFilter.split(',').indexOf(logData.level) !== INDEX_OF_NOT_FOUND;
-  }).filter(function handleGroupsFilter(logData) {
-    return !options.groupsFilter || options.groupsFilter.split(',').indexOf(logData.group) !== INDEX_OF_NOT_FOUND;
-  }).map(function functionName(logData) {
-    return function produceLog() {
-      var FIRST_LETTER = 0;
-      var message = '\n[' + logData.level[FIRST_LETTER] + ']' + ('[' + logData.group + ']:') + (' ' + logData.message + '\n');
-      switch (logData.level) {
-        case log.levels.info:
-          return writeStreams.out.write(message);
-        case log.levels.warning:
-          return writeStreams.error.write(message);
-        case log.levels.error:
-          return writeStreams.error.write(message);
-        default:
-          return writeStreams.error.write(message);
-      }
+var _rxjs = require('rxjs');
+
+var _rxjs2 = _interopRequireDefault(_rxjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var INDEX_OF_NOT_FOUND = -1;
+
+function createWriterWrapped$(event$, writer) {
+  return event$.map(function onMap(data) {
+    return function handleWriter() {
+      writer(data);
     };
-  }).subscribe(function handleLogSubscribe(produceLog) {
-    produceLog();
   });
 }
 
-module.exports = {
-  create: create,
-  writeStreamsFactory: defaultWriteStreamsFactory
+function createHandleGroupsFilter(groupsFilter) {
+  return function handleGroupsFilter(logData) {
+    return !groupsFilter || groupsFilter.split(',').indexOf(logData.group) !== INDEX_OF_NOT_FOUND;
+  };
+}
+
+function create(log, writers, options) {
+  var infoWritable$ = createWriterWrapped$(log.events.info$, writers.info);
+  var warningWritable$ = createWriterWrapped$(log.events.warning$, writers.warning);
+  var errorWritable$ = createWriterWrapped$(log.events.error$, writers.error);
+  var subscription = _rxjs2.default.Observable.merge(infoWritable$, warningWritable$, errorWritable$).filter(createHandleGroupsFilter(options.groupsFilter)).subscribe(function onInfo$Subscribe(writerWrapper) {
+    writerWrapper();
+  });
+  return {
+    subscription: subscription
+  };
+}
+
+exports.default = {
+  create: create
 };

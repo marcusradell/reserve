@@ -1,3 +1,5 @@
+"use strict";
+
 /** @module config/environment */
 
 /**
@@ -10,18 +12,16 @@
 * but with the prefix stripped from the returned object's keys.
 */
 function create(envVarCollection, prefix) {
-  const envVarKeys = Object.keys(envVarCollection)
-  const config = {}
-  envVarKeys
-  .filter(function handleFilter(envVarKey) {
-    return envVarKey.startsWith(prefix)
-  })
-  .forEach(function handleMap(envVarKey) {
-    config[envVarKey.slice(prefix.length)] = envVarCollection[envVarKey]
-  })
-  return config
+  var envVarKeys = Object.keys(envVarCollection);
+  var config = {};
+  envVarKeys.filter(function handleFilter(envVarKey) {
+    return envVarKey.startsWith(prefix);
+  }).forEach(function handleMap(envVarKey) {
+    config[envVarKey.slice(prefix.length)] = envVarCollection[envVarKey];
+  });
+  return config;
 }
 
 module.exports = {
-  create
-}
+  create: create
+};

@@ -1,7 +1,7 @@
-const rootTest = require('tap').test
-const environmentConfigFactory = require('./environment')
+import environmentConfigFactory from './environment'
+import tests from 'ava'
 
-rootTest('config environment', function handleRootTest(test) {
+tests.cb('config environment', function handleRootTest(test) {
   const environmentConfigWithPrefix = environmentConfigFactory.create(
     {PREFIX_VARNAME: 'value'}, 'PREFIX_'
   )
@@ -18,5 +18,5 @@ rootTest('config environment', function handleRootTest(test) {
     {},
     'should create a config object without prefixes'
   )
-  test.done()
+  test.end()
 })

@@ -1,8 +1,8 @@
-const configFactory = require('./index')
-const rootTest = require('tap').test
+import configFactory from './index'
+import tests from 'ava'
 
 /* eslint-disable max-statements */
-rootTest('config', function onConfigTest(test) {
+tests.cb('config', function onConfigTest(test) {
   /* eslint-enable max-statements */
   const config = configFactory.create()
   const configKeys = Object.keys(config)
@@ -58,5 +58,5 @@ rootTest('config', function onConfigTest(test) {
     EXPECTED_CONFIG_LENGTH,
     'should have the right number of config variables'
   )
-  test.done()
+  test.end()
 })

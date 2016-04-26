@@ -1,13 +1,14 @@
-require('../config')
-const unitTests = require('tap')
-const serverFactory = require('../server')
-const ioClient = require('socket.io-client')
+import '../config'
+import ioClient from 'socket.io-client'
+import serverFactory from '../server'
+import tests from 'ava'
+
 const ioOptions = {
   transports: ['websocket'],
   'force new connection': true
 }
 
-unitTests.test('server', function handleUnitTest(unitTest) {
+tests.cb('server', function handleUnitTest(unitTest) {
   serverFactory.create()
   .then(function handleCreateThen(serverData) {
     const config = serverData.config
@@ -33,7 +34,7 @@ unitTests.test('server', function handleUnitTest(unitTest) {
     socket.on('disconnect', function handleClose() {
       unitTest.pass('should disconnect a client.')
       serverData.close()
-      unitTest.done()
+      unitTest.end()
     })
   })
 })

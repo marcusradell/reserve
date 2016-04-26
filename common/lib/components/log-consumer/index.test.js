@@ -1,67 +1,38 @@
 'use strict';
 
-var tests = require('tap');
-var logFactory = require('../log');
-var logConsumerFactory = require('./index');
-var writeStreamsMockFactory = require('./write-streams-mock');
+var _index = require('./index');
 
-tests.test('log-consumer-console', function handleTest(test) {
-  var log = logFactory.create();
+var _index2 = _interopRequireDefault(_index);
+
+var _log = require('../log');
+
+var _log2 = _interopRequireDefault(_log);
+
+var _mockWriters = require('./writers/mock-writers');
+
+var _mockWriters2 = _interopRequireDefault(_mockWriters);
+
+var _ava = require('ava');
+
+var _ava2 = _interopRequireDefault(_ava);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_ava2.default.cb('log-consumer', function onTests(test) {
+  var log = _log2.default.create();
+  // NOTE: Proxy is populated with the subscription later in the code. -MANI
   var subscriptionProxy = {};
-  var writeStreamsMock = writeStreamsMockFactory.create(function handleWrite(message) {
-    test.strictEquals(message, '\n[e][event]: test\n', 'should return a formatted message.');
+  var writeStreamsMock = _mockWriters2.default.create(function handleWrite(message) {
+    test.deepEqual(message, {
+      group: 'event',
+      message: 'test'
+    });
     subscriptionProxy.subscription.unsubscribe();
-    test.done();
+    test.end();
   });
-  // TODO: How do I check unsubscribe when mock is declared before? -MANI
-  subscriptionProxy.subscription = logConsumerFactory.create(log, writeStreamsMock, {});
-  log.actions.add({
-    level: log.levels.error,
+  subscriptionProxy.subscription = _index2.default.create(log, writeStreamsMock, {}).subscription;
+  log.actions.error({
     group: log.groups.event,
     message: 'test'
   });
 });
-
-// const INDEX_OF_NOT_FOUND = -1
-//
-// function create(log, levelsFilter, groupsFilter) {
-//   log.events.add$
-//   .filter(function handleLevelsFilter(logData) {
-//     return !levelsFilter ||
-//     levelsFilter
-//     .split(',')
-//     .indexOf(logData.level) !== INDEX_OF_NOT_FOUND
-//   })
-//   .filter(function handleGroupsFilter(logData) {
-//     return !groupsFilter ||
-//       groupsFilter
-//       .split(',')
-//       .indexOf(logData.group) !== INDEX_OF_NOT_FOUND
-//   })
-//   .map(function functionName(logData) {
-//     return function produceLog() {
-//       const FIRST_LETTER = 0
-//       const message =
-//         `\n[${logData.level[FIRST_LETTER]}]` +
-//         `[${logData.group}]:` +
-//         ` ${logData.message}\n`
-//       switch (logData.level) {
-//       case log.levels.info:
-//         return process.stdout.write(message)
-//       case log.levels.warning:
-//         return process.stderr.write(message)
-//       case log.levels.error:
-//         return process.stderr.write(message)
-//       default:
-//         return process.stderr.write(message)
-//       }
-//     }
-//   })
-//   .subscribe(function handleLogSubscribe(produceLog) {
-//     produceLog()
-//   })
-// }
-//
-// module.exports = {
-//   create
-// }
