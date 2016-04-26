@@ -1,5 +1,8 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 /** @module config/environment */
 
 /**
@@ -22,6 +25,6 @@ function create(envVarCollection, prefix) {
   return config;
 }
 
-module.exports = {
+exports.default = {
   create: create
 };

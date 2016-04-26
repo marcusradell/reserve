@@ -1,8 +1,14 @@
 'use strict';
 
-/** @module config */
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var environmentConfigFactory = require('./environment');
+var _environment = require('./environment');
+
+var _environment2 = _interopRequireDefault(_environment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
 Use this prefix for all environment variables.
@@ -16,12 +22,14 @@ var PREFIX = 'RSRV_';
 * @see module:config/environment
 * @returns {Object} The config object.
 */
+/** @module config */
+
 function create() {
-  var environmentConfig = environmentConfigFactory.create(process.env, PREFIX);
+  var environmentConfig = _environment2.default.create(process.env, PREFIX);
   return Object.assign({}, environmentConfig);
 }
 
-module.exports = {
+exports.default = {
   create: create,
   PREFIX: PREFIX
 };

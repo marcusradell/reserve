@@ -1,5 +1,8 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 function create(interactions, log) {
   var startIndex = 0;
   var lastIndex = -1;
@@ -39,6 +42,6 @@ function create(interactions, log) {
   };
 }
 
-module.exports = {
+exports.default = {
   create: create
 };
