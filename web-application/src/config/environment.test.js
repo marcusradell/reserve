@@ -1,11 +1,11 @@
 import environmentConfigFactory from './environment'
 import tests from 'ava'
 
-tests.cb('config environment', function handleRootTest(test) {
+tests('config environment', function handleRootTest(test) {
   const environmentConfigWithPrefix = environmentConfigFactory.create(
     {PREFIX_VARNAME: 'value'}, 'PREFIX_'
   )
-  test.deepEquals(
+  test.deepEqual(
     environmentConfigWithPrefix,
     {VARNAME: 'value'},
     'should create a config object without prefixes'
@@ -13,10 +13,9 @@ tests.cb('config environment', function handleRootTest(test) {
   const environmentConfigWithoutPrefix = environmentConfigFactory.create(
     {VARNAME: 'value'}, 'PREFIX_'
   )
-  test.deepEquals(
+  test.deepEqual(
     environmentConfigWithoutPrefix,
     {},
     'should create a config object without prefixes'
   )
-  test.end()
 })

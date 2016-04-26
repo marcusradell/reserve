@@ -2,61 +2,56 @@ import configFactory from './index'
 import tests from 'ava'
 
 /* eslint-disable max-statements */
-tests.cb('config', function onConfigTest(test) {
+tests('config', function onConfigTest(test) {
   /* eslint-enable max-statements */
   const config = configFactory.create()
   const configKeys = Object.keys(config)
-  test.strictEquals(
+  test.is(
     configFactory.PREFIX,
-    'RSRV_',
-    'should have prefix "RSRV_"'
+    'RSRV_'
   )
-  test.strictEquals(
+  test.is(
     Boolean(process.env.NODE_ENV.length),
-    true,
-    'should require a value for NODE_ENV'
+    true
   )
-  test.strictEquals(
+  test.is(
     Boolean(config.PORT.length),
-    true,
-    'should require a value for PORT'
+    true
   )
-  test.strictEquals(
+  test.is(
     Boolean(config.HOST.length),
-    true,
-    'should require a value for HOST'
+    true
   )
   const INDEX_OF_NOT_FOUND = -1
-  test.strictEquals(
+  test.is(
     configKeys.indexOf('LOG_LEVELS') !== INDEX_OF_NOT_FOUND,
     true,
     'should have config variable LOG_LEVELS'
   )
-  test.strictEquals(
+  test.is(
     configKeys.indexOf('LOG_GROUPS') !== INDEX_OF_NOT_FOUND,
     true,
     'should have config variable LOG_GROUPS'
   )
-  test.strictEquals(
+  test.is(
     configKeys.indexOf('SENTRY') !== INDEX_OF_NOT_FOUND,
     true,
     'should have config variable SENTRY'
   )
-  test.strictEquals(
+  test.is(
     configKeys.indexOf('SENDGRID') !== INDEX_OF_NOT_FOUND,
     true,
     'should have config variable SENDGRID'
   )
-  test.strictEquals(
+  test.is(
     configKeys.indexOf('AUTHY') !== INDEX_OF_NOT_FOUND,
     true,
     'should have config variable AUTHY'
   )
   const EXPECTED_CONFIG_LENGTH = 9
-  test.strictEquals(
+  test.is(
     configKeys.length,
     EXPECTED_CONFIG_LENGTH,
     'should have the right number of config variables'
   )
-  test.end()
 })

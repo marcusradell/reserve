@@ -1,9 +1,9 @@
-const tests = require('ava')
-const Rx = require('rxjs')
-const handleConnectFactory = require('./socket-connection')
-const logFactory = require('reserve-common/lib/components/log').default
+import Rx from 'rxjs'
+import handleConnectFactory from './socket-connection'
+import logFactory from 'reserve-common/lib/components/log'
+import tests from 'ava'
 
-tests.cb('handle-connect', function handleRootTest(unitTests) {
+tests.cb('handle-connect', function handleRootTest(test) {
   const mockedEvent$ = new Rx.Subject()
   function mockedAction(data) {
     mockedEvent$.next(data)
@@ -12,18 +12,16 @@ tests.cb('handle-connect', function handleRootTest(unitTests) {
     events: {event$: mockedEvent$},
     actions: {mockedAction}
   }
-  unitTests.cb('create', function handleUnitTest(unitTest) {
-    const log = logFactory.create()
-    const handleConnect = handleConnectFactory.create(mockedInteractions, log)
-    unitTest.strictEquals(
-      typeof handleConnect,
-      'function',
-      'should return a function'
-    )
-    unitTest.end()
-  })
-
-  unitTests.end()
+  // unitTests('create', function handleUnitTest(unitTest) {
+  const log = logFactory.create()
+  const handleConnect = handleConnectFactory.create(mockedInteractions, log)
+  test.is(
+    typeof handleConnect,
+    'function',
+    'should return a function'
+  )
+  test.end()
+  // })
   // TODO: mockedSocket.on is called with 'message' and 'disconnect.'
   // Fix tests. -MANI
   // unitTests.test('handleConnect', function handleUnitTest(unitTest) {

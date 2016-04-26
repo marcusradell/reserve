@@ -17,8 +17,7 @@ function closeFactory(server, log) {
   return function close () {
     return new Promise(function handleDestroyPromise(resolveClose) {
       server.close(function handleClose() {
-        log.actions.add({
-          level: log.levels.info,
+        log.actions.info({
           group: log.groups.httpServer,
           message: 'Server closed'
         })
@@ -34,8 +33,7 @@ function httpServerListen(serverData, log) {
       serverData.port,
       serverData.host,
       function handleServerListen() {
-        log.actions.add({
-          level: log.levels.info,
+        log.actions.info({
           group: log.groups.httpServer,
           message: 'Listening on ' +
           `[${serverData.httpServer.address().address}:` +
