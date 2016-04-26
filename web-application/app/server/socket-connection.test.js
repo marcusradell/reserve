@@ -1,7 +1,7 @@
 const rootTest = require('tap')
 const Rx = require('rxjs')
 const handleConnectFactory = require('./socket-connection')
-const logFactory = require('rsrv-common/lib/components/log').default
+const logFactory = require('reserve-common/lib/components/log').default
 
 rootTest.test('handle-connect', function handleRootTest(unitTests) {
   const mockedEvent$ = new Rx.Subject()

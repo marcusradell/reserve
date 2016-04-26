@@ -1,17 +1,18 @@
+// TODO: Make whole project ES6 style or node v6 if it supports modules. -MANI
 const http = require('http')
 const SocketIo = require('socket.io')
 const Rx = require('rxjs')
-const logFactory = require('rsrv-common/lib/components/log').default
-const userFactory = require('rsrv-common/lib/components/user').default
-const chatFactory = require('rsrv-common/lib/components/chat').default
+const logFactory = require('reserve-common/lib/components/log').default
+const userFactory = require('reserve-common/lib/components/user').default
+const chatFactory = require('reserve-common/lib/components/chat').default
 const logConsumerFactory = require(
-  'rsrv-common/lib/components/log-consumer'
+  'reserve-common/lib/components/log-consumer'
   ).default
 const socketConnectionFactory = require('./socket-connection')
 const configFactory = require('../config')
 const eventsFactory = require('./interactions/events')
 const writeStreamsSentryFactory = require(
-  'rsrv-common/lib/components/log-consumer/write-streams-sentry'
+  'reserve-common/lib/components/log-consumer/write-streams-sentry'
 ).default
 
 function closeFactory(server, log) {
