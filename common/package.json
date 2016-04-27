@@ -5,9 +5,11 @@
   "scripts": {
     "test": "ava",
     "test:watch": "ava --watch",
+    "test:coverage": "nyc ava",
+    "test:report": "nyc report --reporter=html",
     "build:clean": "rm -rf lib && mkdir lib",
     "prebuild": "npm run build:clean",
-    "build": "babel src --out-dir lib"
+    "build": "BABEL_ENV=production babel src --out-dir lib"
   },
   "dependencies": {
     "ava": "^0.14.0",
@@ -30,5 +32,9 @@
   },
   "keywords": [],
   "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "coveralls": "^2.11.9",
+    "nyc": "^6.4.0"
+  }
 }

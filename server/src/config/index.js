@@ -1,5 +1,5 @@
 /** @module config */
-
+// TODO: Remove levels. Not used any more. -MANI
 import environmentConfigFactory from './environment'
 
 /**

@@ -1,4 +1,3 @@
-![Image of ReServe](reserve-logo.png)
 # ReServe
 ## A Reactive Node server (with frontend and universal/common compnents)
 
@@ -10,7 +9,7 @@
 [![bitHound Dev Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/devDependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/code.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
 
-Previously named RxJS Server.
+(Previously named RxJS Server. Some old usage of that name might ReMain.)
 
 A websocket server built around RxJS.
 The project goal is to make a proof of concept of a well-structured medium-sized micro services cluster.
