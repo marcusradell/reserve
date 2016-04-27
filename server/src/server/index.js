@@ -10,7 +10,7 @@ import sentryWritersFactory from
   'reserve-common/lib/components/log-consumer/writers/sentry-writers'
 import socketConnectionFactory from './socket-connection'
 import stdWritersFactory from
-  'reserve-common/lib/components/log-consumer/writers/sentry-writers'
+  'reserve-common/lib/components/log-consumer/writers/std-writers'
 import userFactory from 'reserve-common/lib/components/user'
 
 function closeFactory(server, log) {

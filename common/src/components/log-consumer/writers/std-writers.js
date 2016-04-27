@@ -9,19 +9,19 @@ function logDataToString(data, level) {
 function create() {
   function info(data) {
     /* eslint-disable no-undef */
-    process.stdout.write(logDataToString(data), 'i')
+    process.stdout.write(logDataToString(data, 'i'))
     /* eslint-enable no-undef */
   }
 
   function warning(data) {
     /* eslint-disable no-undef */
-    process.stderr.write(logDataToString(data), 'w')
+    process.stderr.write(logDataToString(data, 'w'))
     /* eslint-enable no-undef */
   }
 
   function error(data) {
     /* eslint-disable no-undef */
-    process.stderr.write(logDataToString(data), 'e')
+    process.stderr.write(logDataToString(data, 'e'))
     /* eslint-enable no-undef */
   }
 

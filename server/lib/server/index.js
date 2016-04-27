@@ -44,6 +44,10 @@ var _socketConnection = require('./socket-connection');
 
 var _socketConnection2 = _interopRequireDefault(_socketConnection);
 
+var _stdWriters = require('reserve-common/lib/components/log-consumer/writers/std-writers');
+
+var _stdWriters2 = _interopRequireDefault(_stdWriters);
+
 var _user = require('reserve-common/lib/components/user');
 
 var _user2 = _interopRequireDefault(_user);
@@ -97,7 +101,7 @@ function create() {
   actions[userNamespace] = user.actions;
   actions[chatNamespace] = chat.actions;
   var events = _events2.default.create(_rxjs2.default, [user.events.event$, chat.events.event$]);
-  _logConsumer2.default.create(log, _sentryWriters2.default.create(), {
+  _logConsumer2.default.create(log, _stdWriters2.default.create(), {
     groupsFilter: config.LOG_GROUPS
   });
   if (config.SENTRY) {
