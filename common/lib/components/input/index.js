@@ -30,6 +30,8 @@ var _state2 = _interopRequireDefault(_state);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// TODO: Make a pattern for excluding/including renderer. -MANI
+
 function create() {
   var events = _events2.default.create(_rxjs2.default);
   var actions = _actions2.default.create(events);

@@ -1,0 +1,44 @@
+{
+  "name": "rxjs-server",
+  "version": "1.0.0",
+  "description": "A websocket server built around RxJS.",
+  "main": "lib/index.js",
+  "scripts": {
+    "build:clean": "rm -rf lib && mkdir lib",
+    "prebuild": "npm run build:clean",
+    "build": "babel src --out-dir lib",
+    "start": "npm test && node lib",
+    "test": "ava",
+    "test:watch": "ava --watch",
+    "lint": "eslint -c .eslintrc.js ./src",
+    "docker:run": "docker-compose run --rm web-application /bin/bash"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit",
+    "source": "src/**/*.js",
+    "failFast": true,
+    "files": "src/**/*.test.js"
+  },
+  "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcusnielsen/rxjs-server.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ava": "^0.14.0",
+    "raven": "^0.10.0",
+    "reserve-common": "file:../common",
+    "rethinkdb": "^2.2.2",
+    "rxjs": "^5.0.0-beta.2",
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^2.0.0",
+    "nodemon": "^1.9.1"
+  }
+}

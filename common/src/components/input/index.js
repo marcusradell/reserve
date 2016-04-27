@@ -1,3 +1,5 @@
+// TODO: Make a pattern for excluding/including renderer. -MANI
+
 import React from 'react'
 import Rx from 'rxjs'
 import actionsFactory from './interactions/actions'

@@ -1,8 +1,8 @@
-const unitTests = require('tap')
+const unitTests = require('ava')
 const Rx = require('rxjs')
 const eventStreamComposer = require('./index')
 
-unitTests.test('compose', function handleUnitTest(unitTest) {
+unitTests('compose', function handleUnitTest(unitTest) {
   const NUMBER_OF_TESTS = 2
   unitTest.plan(NUMBER_OF_TESTS)
 
