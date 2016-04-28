@@ -1,10 +1,17 @@
-# RxJS server
+# ReServe
+## A Reactive Node server (with frontend and universal/common compnents)
+
+[![Join the chat at https://gitter.im/marcusnielsen/reserve](https://badges.gitter.im/marcusnielsen/reserve.svg)](https://gitter.im/marcusnielsen/reserve?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+[![Join the chat at https://gitter.im/marcusnielsen/rxjs-server](https://badges.gitter.im/marcusnielsen/rxjs-server.svg)](https://gitter.im/marcusnielsen/rxjs-server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/marcusnielsen/rxjs-server.svg?branch=master)](https://travis-ci.org/marcusnielsen/rxjs-server)
 [![Coverage Status](https://coveralls.io/repos/github/marcusnielsen/rxjs-server/badge.svg?branch=master)](https://coveralls.io/github/marcusnielsen/rxjs-server?branch=master)
 [![bitHound Overall Score](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/score.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
 [![bitHound Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/dependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/devDependencies.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server/master/dependencies/npm)
 [![bitHound Code](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/code.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
+
+(Previously named RxJS Server. Some old usage of that name might ReMain.)
 
 A websocket server built around RxJS.
 The project goal is to make a proof of concept of a well-structured medium-sized micro services cluster.
@@ -18,7 +25,7 @@ No frameworks were hurt nor installed during the making of this project.
 # Setup
 * You should have docker installed. But you can do without.
 * If running on non-docker host, set all env vars needed.
-* For development, set `NODE_ENV=development` and all env vars get default settings.
+See `.docker-env` for needed settings or tests at `app/config/index.test.js`.
 
 # Install
 * For docker: `npm run docker:up` .
@@ -41,7 +48,6 @@ Since this project is backend only, here's some of the starting points.
   * Sets up the http server, websocket server and sets up the event streams components.
   * `config/`
     * Reads the env vars with the app prefix.
-    * If development mode, loads default values.
   * `components/`
     * All the middleware component for the app.
       * `interactions`
@@ -58,6 +64,12 @@ Only use require on the top level of each module/component as to avoid side-effe
 Contain all dynamic code in factories/#create-functions so code can be unit tested in isolation.
 
 # Design patterns
+This project tries to minimize the API surface by not using large frameworks. Tools that can be replaced by a small amount of custom code will not be used for the same reason.
+
+Note:
+- Socket.io does not conform to the above rule due to limitations in my understanding of implementing a websocket server from the net module.
+- RxJS could be replaced by CSP channels written with generators. Google suggestion: "kyle simpson csp".
+
 All components will export a `create` factory function. This makes testing easier and lessens the side effects of node modules being singletons.
 
 Only the root level files (usually `index.js`) `require` modules. Child modules get them sent in as arguments to the `create` factory function.
@@ -79,6 +91,7 @@ First read the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
 Then follow the instructions in [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # // TODO:
+* Make issues for the todos.
 * Complete jsdoc for stable parts.
 * Make a client.
 * Move server app into a subfolder to make room for more sibling services.
