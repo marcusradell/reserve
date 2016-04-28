@@ -1,7 +1,11 @@
-function create(interactions, log) {
-  const startIndex = 0
-  const lastIndex = -1
+import SocketIo from 'socket.io'
+
+const startIndex = 0
+const lastIndex = -1
+
+function socketConnectionCreate(interactions, log) {
   return function handleConnect(socket) {
+    console.log('MARK22')
     log.actions.info({
       group: log.groups.wsServer,
       message: 'A client connected.'
@@ -32,14 +36,24 @@ function create(interactions, log) {
       })
     })
     socket.on('disconnect', function handleDisconnect() {
-      log.actions.add({
-        level: log.levels.info,
+      log.actions.info({
         group: log.groups.wsServer,
         message: 'A client disconnected.'
       })
       event$Subscription.unsubscribe()
     })
   }
+}
+
+function create(httpServer, interactions, log) {
+  const ioServer = SocketIo.listen(httpServer)
+  ioServer.on(
+    'connection',
+    function onServerConnect(socket) {
+      console.log('MARK21')
+      socketConnectionCreate(interactions, log)(socket)
+    }
+  )
 }
 
 export default {

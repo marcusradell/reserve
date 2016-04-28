@@ -7,7 +7,7 @@
     "build:clean": "rm -rf lib && mkdir lib",
     "prebuild": "npm run build:clean",
     "build": "babel src --out-dir lib",
-    "start": "npm test && node lib",
+    "start": "ava --files lib/**/*.test.js --tap && node lib",
     "test": "ava",
     "test:watch": "ava --watch",
     "lint": "eslint -c .eslintrc.js ./src",
@@ -20,7 +20,8 @@
     "babel": "inherit",
     "source": "src/**/*.js",
     "failFast": true,
-    "files": "src/**/*.test.js"
+    "files": "src/**/*.test.js",
+    "timeout": "5000"
   },
   "author": "Marcus Nielsen <marcus.nielsen82@gmail.com>",
   "repository": {

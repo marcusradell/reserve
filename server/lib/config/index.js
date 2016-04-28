@@ -23,7 +23,7 @@ var PREFIX = 'RSRV_';
 * @returns {Object} The config object.
 */
 /** @module config */
-
+// TODO: Remove levels. Not used any more. -MANI
 function create() {
   var environmentConfig = _environment2.default.create(process.env, PREFIX);
   return Object.assign({}, environmentConfig);

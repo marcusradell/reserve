@@ -1,14 +1,12 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 var _rxjs = require('rxjs');
 
 var _rxjs2 = _interopRequireDefault(_rxjs);
 
-var _socketConnection = require('./socket-connection');
+var _http = require('http');
 
-var _socketConnection2 = _interopRequireDefault(_socketConnection);
+var _http2 = _interopRequireDefault(_http);
 
 var _log = require('reserve-common/lib/components/log');
 
@@ -17,6 +15,10 @@ var _log2 = _interopRequireDefault(_log);
 var _ava = require('ava');
 
 var _ava2 = _interopRequireDefault(_ava);
+
+var _index = require('./index.js');
+
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,8 +33,7 @@ _ava2.default.cb('handle-connect', function handleRootTest(test) {
   };
   // unitTests('create', function handleUnitTest(unitTest) {
   var log = _log2.default.create();
-  var handleConnect = _socketConnection2.default.create(mockedInteractions, log);
-  test.is(typeof handleConnect === 'undefined' ? 'undefined' : _typeof(handleConnect), 'function', 'should return a function');
+  _index2.default.create(_http2.default.createServer(), mockedInteractions, log);
   test.end();
   // })
   // TODO: mockedSocket.on is called with 'message' and 'disconnect.'

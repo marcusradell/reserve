@@ -1,7 +1,8 @@
 import Rx from 'rxjs'
-import handleConnectFactory from './socket-connection'
+import http from 'http'
 import logFactory from 'reserve-common/lib/components/log'
 import tests from 'ava'
+import websocketServerFactory from './index.js'
 
 tests.cb('handle-connect', function handleRootTest(test) {
   const mockedEvent$ = new Rx.Subject()
@@ -14,11 +15,8 @@ tests.cb('handle-connect', function handleRootTest(test) {
   }
   // unitTests('create', function handleUnitTest(unitTest) {
   const log = logFactory.create()
-  const handleConnect = handleConnectFactory.create(mockedInteractions, log)
-  test.is(
-    typeof handleConnect,
-    'function',
-    'should return a function'
+  websocketServerFactory.create(
+    http.createServer(), mockedInteractions, log
   )
   test.end()
   // })

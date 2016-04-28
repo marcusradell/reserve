@@ -3,10 +3,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-function create(interactions, log) {
-  var startIndex = 0;
-  var lastIndex = -1;
+
+var _socket = require('socket.io');
+
+var _socket2 = _interopRequireDefault(_socket);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var startIndex = 0;
+var lastIndex = -1;
+
+function socketConnectionCreate(interactions, log) {
   return function handleConnect(socket) {
+    console.log('MARK22');
     log.actions.info({
       group: log.groups.wsServer,
       message: 'A client connected.'
@@ -32,14 +41,21 @@ function create(interactions, log) {
       });
     });
     socket.on('disconnect', function handleDisconnect() {
-      log.actions.add({
-        level: log.levels.info,
+      log.actions.info({
         group: log.groups.wsServer,
         message: 'A client disconnected.'
       });
       event$Subscription.unsubscribe();
     });
   };
+}
+
+function create(httpServer, interactions, log) {
+  var ioServer = _socket2.default.listen(httpServer);
+  ioServer.on('connection', function onServerConnect(socket) {
+    console.log('MARK21');
+    socketConnectionCreate(interactions, log)(socket);
+  });
 }
 
 exports.default = {
