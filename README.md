@@ -10,6 +10,7 @@
 [![bitHound Code](https://www.bithound.io/github/marcusnielsen/rxjs-server/badges/code.svg)](https://www.bithound.io/github/marcusnielsen/rxjs-server)
 
 (Previously named RxJS Server. Some old usage of that name might ReMain.)
+Since the restructure to three projects, I need to re-enable the services. Right now, the chat is up, but CI-services are down for a while longer.
 
 A websocket server built around RxJS.
 The project goal is to make a proof of concept of a well-structured medium-sized micro services cluster.

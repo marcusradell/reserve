@@ -8,12 +8,30 @@ import serverLogFactory from '../server-log'
 import userFactory from 'reserve-common/lib/components/user'
 import websocketServerFactory from '../websocket-server'
 
+const JSON_SPACING = 2
+
+function announceStartup(log) {
+  log.actions.info({
+    group: log.groups.httpServer,
+    message: `Application starting with NODE_ENV: [${process.env.NODE_ENV}]`
+  })
+  log.actions.info({
+    group: log.groups.httpServer,
+    message: `Config loaded with keys: \n` +
+    `CONFIG START\n` +
+    `${JSON.stringify(Object.keys(config), null, JSON_SPACING)}` +
+    `\nCONFIG END`
+  })
+}
+
 // TODO: Fix too many statements eslint error. -MANI
 /* eslint-disable max-statements */
 function create() {
   const config = configFactory.create()
   const log = serverLogFactory.create(config)
   const serverDataPromise = serverFactory.create(config, log)
+  // TODO: Solve isolation of actions while namespaces are needed at create-time. -MANI
+  // Maybe export the namespaces from actions module? Maybe change when namespaces are resolved? Second sounds better.
   const userNamespace = 'user'
   const chatNamespace = 'chat'
   const user = userFactory.create(userNamespace)
@@ -28,18 +46,7 @@ function create() {
       chat.events.event$
     ]
   )
-  log.actions.info({
-    group: log.groups.httpServer,
-    message: `Server starting with NODE_ENV: [${process.env.NODE_ENV}]`
-  })
-  const JSON_SPACING = 2
-  log.actions.info({
-    group: log.groups.httpServer,
-    message: `Config loaded with keys: \n` +
-    `CONFIG START\n` +
-    `${JSON.stringify(Object.keys(config), null, JSON_SPACING)}` +
-    `\nCONFIG END`
-  })
+  announceStartup(log)
   events.event$.subscribe(function logEvent(eventData) {
     log.actions.info({
       group: log.groups.event,
