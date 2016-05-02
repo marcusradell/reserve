@@ -10,7 +10,7 @@ import websocketServerFactory from '../websocket-server'
 
 const JSON_SPACING = 2
 
-function announceStartup(log) {
+function announceStartup(config, log) {
   log.actions.info({
     group: log.groups.httpServer,
     message: `Application starting with NODE_ENV: [${process.env.NODE_ENV}]`
@@ -27,7 +27,7 @@ function announceStartup(log) {
 // TODO: Fix too many statements eslint error. -MANI
 /* eslint-disable max-statements */
 function create() {
-  const config = configFactory.create()
+  const config = configFactory.create(configFactory.prefixRsrv)
   const log = serverLogFactory.create(config)
   const serverDataPromise = serverFactory.create(config, log)
   // TODO: Solve isolation of actions while namespaces are needed at create-time. -MANI
@@ -46,7 +46,7 @@ function create() {
       chat.events.event$
     ]
   )
-  announceStartup(log)
+  announceStartup(config, log)
   events.event$.subscribe(function logEvent(eventData) {
     log.actions.info({
       group: log.groups.event,

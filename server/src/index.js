@@ -9,9 +9,4 @@ function create() {
   appFactory.create()
 }
 
-process.on('uncaughtException', (err) => {
-  console.log(`Caught exception: ${err}`);
-  console.log(err.stack)
-});
-
 create()

@@ -13,9 +13,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable max-statements */
 (0, _ava2.default)('config', function onConfigTest(test) {
   /* eslint-enable max-statements */
-  var config = _index2.default.create();
+  var config = _index2.default.create(_index2.default.prefixRsrv);
   var configKeys = Object.keys(config);
-  test.is(_index2.default.PREFIX, 'RSRV_');
+  test.is(_index2.default.prefixRsrv, 'RSRV_');
   test.is(Boolean(process.env.NODE_ENV.length), true);
   test.is(Boolean(config.PORT.length), true);
   test.is(Boolean(config.HOST.length), true);

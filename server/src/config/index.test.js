@@ -4,10 +4,10 @@ import tests from 'ava'
 /* eslint-disable max-statements */
 tests('config', function onConfigTest(test) {
   /* eslint-enable max-statements */
-  const config = configFactory.create()
+  const config = configFactory.create(configFactory.prefixRsrv)
   const configKeys = Object.keys(config)
   test.is(
-    configFactory.PREFIX,
+    configFactory.prefixRsrv,
     'RSRV_'
   )
   test.is(

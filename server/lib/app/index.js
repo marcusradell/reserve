@@ -38,13 +38,30 @@ var _websocketServer2 = _interopRequireDefault(_websocketServer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// TODO: Rename parent folder to app. -MANI
+
+
+var JSON_SPACING = 2;
+
+function announceStartup(config, log) {
+  log.actions.info({
+    group: log.groups.httpServer,
+    message: 'Application starting with NODE_ENV: [' + process.env.NODE_ENV + ']'
+  });
+  log.actions.info({
+    group: log.groups.httpServer,
+    message: 'Config loaded with keys: \n' + 'CONFIG START\n' + ('' + JSON.stringify(Object.keys(config), null, JSON_SPACING)) + '\nCONFIG END'
+  });
+}
+
 // TODO: Fix too many statements eslint error. -MANI
 /* eslint-disable max-statements */
-// TODO: Rename parent folder to app. -MANI
 function create() {
-  var config = _config2.default.create();
+  var config = _config2.default.create(_config2.default.prefixRsrv);
   var log = _serverLog2.default.create(config);
   var serverDataPromise = _httpServer2.default.create(config, log);
+  // TODO: Solve isolation of actions while namespaces are needed at create-time. -MANI
+  // Maybe export the namespaces from actions module? Maybe change when namespaces are resolved? Second sounds better.
   var userNamespace = 'user';
   var chatNamespace = 'chat';
   var user = _user2.default.create(userNamespace);
@@ -53,15 +70,7 @@ function create() {
   actions[userNamespace] = user.actions;
   actions[chatNamespace] = chat.actions;
   var events = _events2.default.create(_rxjs2.default, [user.events.event$, chat.events.event$]);
-  log.actions.info({
-    group: log.groups.httpServer,
-    message: 'Server starting with NODE_ENV: [' + process.env.NODE_ENV + ']'
-  });
-  var JSON_SPACING = 2;
-  log.actions.info({
-    group: log.groups.httpServer,
-    message: 'Config loaded with keys: \n' + 'CONFIG START\n' + ('' + JSON.stringify(Object.keys(config), null, JSON_SPACING)) + '\nCONFIG END'
-  });
+  announceStartup(config, log);
   events.event$.subscribe(function logEvent(eventData) {
     log.actions.info({
       group: log.groups.event,

@@ -1,10 +1,14 @@
-function create(React, ReactDom, state$, {ConnectionElement, ChatElement}) {
+function create(React, ReactDom, state$, {ConnectionElement, ClientChatElement, ServerChatElement}) {
   state$
   .map(function onMap(state) {
     return (
       <div>
+        <strong>Websocket server status</strong>
         <ConnectionElement state={state.connection} />
-        <ChatElement state={state.chat}/>
+        <strong>Client state</strong>
+        <ClientChatElement state={state.clientChat}/>
+        <strong>Server state</strong>
+        <ServerChatElement state={state.serverChat}/>
       </div>
     )
   })

@@ -8,6 +8,7 @@ function create(React, actions, inputRenderer) {
 
   function onClick() {
     actions.write();
+    actions.setValue();
   }
 
   function render(_ref) {

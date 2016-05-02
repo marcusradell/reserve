@@ -6,7 +6,7 @@ import environmentConfigFactory from './environment'
 Use this prefix for all environment variables.
 @example process.env.RSRV_PORT
 */
-const PREFIX = 'RSRV_'
+const prefixRsrv = 'RSRV_'
 
 /**
 * The configuration factory.
@@ -14,14 +14,14 @@ const PREFIX = 'RSRV_'
 * @see module:config/environment
 * @returns {Object} The config object.
 */
-function create() {
+function create(prefix) {
   const environmentConfig = environmentConfigFactory.create(
-    process.env, PREFIX
+    process.env, prefix
   )
   return Object.assign({}, environmentConfig)
 }
 
 export default {
   create,
-  PREFIX
+  prefixRsrv
 }

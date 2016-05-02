@@ -112,13 +112,18 @@
 	
 	function create() {
 	  var connection = _connection2.default.create();
-	  var chat = _chat2.default.create('chat');
-	  var events = _events2.default.create(_rxjs2.default, [chat.events.event$]);
-	  _socket4.default.create(_socket2.default, events, connection.actions);
-	  var state$ = _state2.default.create(_rxjs2.default, connection.state.state$, chat.state.state$);
+	  var clientChat = _chat2.default.create('client-chat');
+	  var serverChatNamespace = 'server-chat';
+	  var serverChat = _chat2.default.create(serverChatNamespace);
+	  var actions = {};
+	  actions[serverChatNamespace] = serverChat.actions;
+	  var events = _events2.default.create(_rxjs2.default, [clientChat.events.event$]);
+	  _socket4.default.create(_socket2.default, { events: events, actions: actions }, connection.actions);
+	  var state$ = _state2.default.create(_rxjs2.default, connection.state.state$, clientChat.state.state$, serverChat.state.state$);
 	  var elements = {
 	    ConnectionElement: connection.renderer.render,
-	    ChatElement: chat.renderer.render
+	    ClientChatElement: clientChat.renderer.render,
+	    ServerChatElement: serverChat.renderer.render
 	  };
 	  _renderer2.default.create(_react2.default, _reactDom2.default, state$, elements);
 	}
@@ -41696,14 +41701,16 @@
 	});
 	function create(React, ReactDom, state$, _ref) {
 	  var ConnectionElement = _ref.ConnectionElement;
-	  var ChatElement = _ref.ChatElement;
+	  var ClientChatElement = _ref.ClientChatElement;
+	  var ServerChatElement = _ref.ServerChatElement;
 	
 	  state$.map(function onMap(state) {
 	    return React.createElement(
 	      'div',
 	      null,
 	      React.createElement(ConnectionElement, { state: state.connection }),
-	      React.createElement(ChatElement, { state: state.chat })
+	      React.createElement(ClientChatElement, { state: state.clientChat }),
+	      React.createElement(ServerChatElement, { state: state.serverChat })
 	    );
 	  }).subscribe(function (app) {
 	    ReactDom.render(app, document.querySelector('[data-app]'));
@@ -41723,7 +41730,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	function create(io, events, connectionActions) {
+	var startIndex = 0;
+	var lastIndex = -1;
+	
+	function create(io, interactions, connectionActions) {
 	  var socket = io('http://0.0.0.0:8888/');
 	  socket.on('connect', function onConnect() {
 	    connectionActions.connect();
@@ -41732,10 +41742,15 @@
 	    connectionActions.disconnect();
 	  });
 	  socket.on('server-event', function onServerEvent(data) {
-	    debugger;
-	    // TODO: fire off action. -MANI
+	    try {
+	      var actionName = data.header.eventName.slice(startIndex, lastIndex);
+	      interactions.actions['server-' + data.header.namespace][actionName](data.body);
+	    } catch (error) {
+	      // TODO: Log with Log component. -MANI
+	      console.log(error);
+	    }
 	  });
-	  events.event$.subscribe(function onEvent(data) {
+	  interactions.events.event$.subscribe(function onEvent(data) {
 	    socket.emit('client-event', data);
 	  });
 	}
@@ -41753,11 +41768,12 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	function create(Rx, connectionState$, chatState$) {
-	  return Rx.Observable.combineLatest(connectionState$, chatState$, function onCombineLatest(connection, chat) {
+	function create(Rx, connectionState$, clientChatState$, serverChatState$) {
+	  return Rx.Observable.combineLatest(connectionState$, serverChatState$, function onCombineLatest(connection, clientChat, serverChat) {
 	    return {
 	      connection: connection,
-	      chat: chat
+	      clientChat: clientChat,
+	      serverChat: serverChat
 	    };
 	  });
 	}

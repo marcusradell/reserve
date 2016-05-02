@@ -1,11 +1,13 @@
-function create(Rx, connectionState$, chatState$) {
+function create(Rx, connectionState$, clientChatState$, serverChatState$) {
   return Rx.Observable.combineLatest(
     connectionState$,
-    chatState$,
-    function onCombineLatest(connection, chat) {
+    clientChatState$,
+    serverChatState$,
+    function onCombineLatest(connection, clientChat, serverChat) {
       return {
         connection,
-        chat
+        clientChat,
+        serverChat
       }
     }
   )

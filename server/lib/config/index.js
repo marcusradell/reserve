@@ -14,7 +14,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Use this prefix for all environment variables.
 @example process.env.RSRV_PORT
 */
-var PREFIX = 'RSRV_';
+var prefixRsrv = 'RSRV_';
 
 /**
 * The configuration factory.
@@ -24,12 +24,12 @@ var PREFIX = 'RSRV_';
 */
 /** @module config */
 // TODO: Remove levels. Not used any more. -MANI
-function create() {
-  var environmentConfig = _environment2.default.create(process.env, PREFIX);
+function create(prefix) {
+  var environmentConfig = _environment2.default.create(process.env, prefix);
   return Object.assign({}, environmentConfig);
 }
 
 exports.default = {
   create: create,
-  PREFIX: PREFIX
+  prefixRsrv: prefixRsrv
 };

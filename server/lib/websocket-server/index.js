@@ -15,7 +15,6 @@ var lastIndex = -1;
 
 function socketConnectionCreate(interactions, log) {
   return function handleConnect(socket) {
-    console.log('MARK22');
     log.actions.info({
       group: log.groups.wsServer,
       message: 'A client connected.'
@@ -24,9 +23,12 @@ function socketConnectionCreate(interactions, log) {
       socket.emit('server-event', data);
     });
     socket.on('client-event', function handleMessage(data) {
+      // TODO: Make universal together with the common helper function and make it the router. -MANI
       try {
         var actionName = data.header.eventName.slice(startIndex, lastIndex);
-        interactions.actions[data.header.namespace][actionName](data.body);
+        var namespace = data.header.namespace.replace('client-', '');
+        interactions.actions[namespace][actionName](data.body);
+        socket.broadcast.emit('server-event', data);
       } catch (error) {
         log.actions.error({
           group: log.groups.wsServer,
@@ -53,7 +55,6 @@ function socketConnectionCreate(interactions, log) {
 function create(httpServer, interactions, log) {
   var ioServer = _socket2.default.listen(httpServer);
   ioServer.on('connection', function onServerConnect(socket) {
-    console.log('MARK21');
     socketConnectionCreate(interactions, log)(socket);
   });
 }

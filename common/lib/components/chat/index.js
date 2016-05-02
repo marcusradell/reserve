@@ -28,10 +28,6 @@ var _input = require('../input');
 
 var _input2 = _interopRequireDefault(_input);
 
-var _reactions = require('./interactions/reactions');
-
-var _reactions2 = _interopRequireDefault(_reactions);
-
 var _renderer = require('./renderer');
 
 var _renderer2 = _interopRequireDefault(_renderer);
@@ -48,7 +44,6 @@ function create(namespace) {
   var actions = _actions2.default.create(events, input.actions);
   var state = _state2.default.create(_rxjs2.default, events, input.state);
   var renderer = _renderer2.default.create(_react2.default, actions, input.renderer);
-  _reactions2.default.create(actions, events);
   return {
     events: events,
     actions: actions,

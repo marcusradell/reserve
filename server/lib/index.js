@@ -15,9 +15,4 @@ function create() {
   _app2.default.create();
 }
 
-process.on('uncaughtException', function (err) {
-  console.log('Caught exception: ' + err);
-  console.log(err.stack);
-});
-
 create();

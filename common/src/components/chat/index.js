@@ -4,7 +4,6 @@ import actionsFactory from './interactions/actions'
 import eventsComposer from '../../helpers/eventsComposer'
 import eventsFactory from './interactions/events'
 import inputFactory from '../input'
-import reactionsFactory from './interactions/reactions'
 import rendererFactory from './renderer'
 import stateFactory from './state'
 
@@ -16,7 +15,6 @@ function create(namespace) {
   const actions = actionsFactory.create(events, input.actions)
   const state = stateFactory.create(Rx, events, input.state)
   const renderer = rendererFactory.create(React, actions, input.renderer)
-  reactionsFactory.create(actions, events)
   return {
     events,
     actions,

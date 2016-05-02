@@ -11,22 +11,29 @@ import stateFactory from './state'
 
 function create() {
   const connection = connectionFactory.create()
-  const chat = chatFactory.create('chat')
+  const clientChat = chatFactory.create('client-chat')
+  const serverChatNamespace = 'server-chat'
+  const serverChat = chatFactory.create(serverChatNamespace)
+  serverChat.events.event$.subscribe(() => { return console.log('TODO: Remove temp code. -MANI') })
+  const actions = {}
+  actions[serverChatNamespace] = serverChat.actions
   const events = eventsFactory.create(
     Rx,
     [
-      chat.events.event$
+      clientChat.events.event$
     ]
   )
-  socketFactory.create(io, events, connection.actions)
+  socketFactory.create(io, {events, actions}, connection.actions)
   const state$ = stateFactory.create(
     Rx,
     connection.state.state$,
-    chat.state.state$
+    clientChat.state.state$,
+    serverChat.state.state$
   )
   const elements = {
     ConnectionElement: connection.renderer.render,
-    ChatElement: chat.renderer.render
+    ClientChatElement: clientChat.renderer.render,
+    ServerChatElement: serverChat.renderer.render
   }
   rendererFactory.create(
     React, ReactDom, state$, elements
