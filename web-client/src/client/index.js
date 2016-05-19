@@ -8,13 +8,13 @@ import io from 'socket.io-client'
 import rendererFactory from './renderer'
 import socketFactory from './socket'
 import stateFactory from './state'
+import logo from '../images/logo.png'
 
 function create() {
   const connection = connectionFactory.create()
   const clientChat = chatFactory.create('client-chat')
   const serverChatNamespace = 'server-chat'
   const serverChat = chatFactory.create(serverChatNamespace)
-  serverChat.events.event$.subscribe(() => { return console.log('TODO: Remove temp code. -MANI') })
   const actions = {}
   actions[serverChatNamespace] = serverChat.actions
   const events = eventsFactory.create(
@@ -36,7 +36,7 @@ function create() {
     ServerChatElement: serverChat.renderer.render
   }
   rendererFactory.create(
-    React, ReactDom, state$, elements
+    React, ReactDom, state$, elements, logo
   )
 }
 
